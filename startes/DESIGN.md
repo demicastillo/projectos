@@ -1,30 +1,39 @@
 # StartEs — dirección visual inicial
 
-> **Adoptado el 30/09/2026:** dirección 1 (editorial con movimiento). Tokens reales en `src/app/globals.css`. Diferencias con la propuesta: en tema oscuro el rojo de texto y acentos es `#E0514F` (el `#A11312` no es legible sobre fondo oscuro); cabecera con fondo sólido; animaciones solo con CSS (sin GSAP). Comparación de las tres direcciones en `design/exploracion/comparacion.png`.
+Estado: **dirección artística en revisión** (corrección del usuario, 30/09/2026). La propuesta «editorial con curvas de marca» implementada en la primera versión **no está aprobada** y no debe extenderse. Los datos de negocio prevalecen sobre cualquier referencia estética.
 
-Estado: propuesta concreta para iniciar exploración, no diseño ya aprobado ni maqueta final. Los datos de negocio prevalecen sobre cualquier referencia estética.
+## Qué se corrige y no debe repetirse
 
-## Concepto recomendado
+Problemas concretos señalados por el usuario en la primera versión:
 
-Una academia contemporánea con ritmo editorial y un gesto gráfico continuo inspirado en las curvas del logo. El idioma se presenta como algo que se usa y se incorpora a la vida. La composición debe sentirse intencional, cercana y adulta sin excluir edades.
+- Etiquetas pequeñas («eyebrows») encima de prácticamente todos los títulos. Usar una etiqueta solo cuando aporte información que el título no da.
+- Hero de texto a la izquierda y decoración abstracta a la derecha.
+- Palabras o últimas líneas coloreadas para crear énfasis automáticamente. El énfasis sale de la composición y la escala.
+- Curvas gigantes y etiquetas flotantes sin función clara. Todo recurso gráfico tiene que informar o estructurar.
+- Secciones con el mismo ritmo y fondos crema alternados.
+- Tarjeta negra redondeada como cierre predecible.
 
-Comenzar con una portada asimétrica: texto dominante a la izquierda, composición de curvas y palabras breves a la derecha, seguida por una lista de objetivos con divisores y numeración discreta. Alternar una comparación compacta, un bloque institucional y un cierre de contacto. No repetir tarjetas de tres columnas en todas las secciones.
+Cambiar fuentes, colores o bordes no resuelve estos problemas: hay que replantear composición, jerarquía y distribución del contenido.
 
-El logo original se conserva. Las curvas decorativas son nuevas piezas inspiradas en su gesto, no un redibujo automático que cambie la marca. Se pueden construir con SVG/CSS; evitar un vídeo de fondo pesado como requisito visual.
+## Exploración en curso
 
-## Exploración acotada
+Dos direcciones visualmente distintas, con el mismo contenido real, limitadas a navegación, hero y una segunda sección (`design/direcciones/`). Referencias consultadas y su adaptación: `docs/07_REFERENCIAS_CONSULTADAS.md`.
 
-Crear tres variantes pequeñas del mismo hero y primera sección, con contenido real y vista móvil:
+1. **Afiche** (candidata inicial del usuario): composición de afiche contemporáneo de academia de idiomas. El titular es la estructura del hero; grilla visible; un único campo rojo para la consulta; la escala de niveles 0–C2 como recurso gráfico propio que se vuelve interactivo en la segunda sección.
+2. **Cuaderno**: materiales del aprendizaje del alemán (papel cuadriculado de 5 mm con margen rojo de los cuadernos escolares alemanes, fichas de vocabulario o *Karteikarten*). El hero es una ficha que se da vuelta del alemán al español; la segunda sección usa pestañas de fichero.
 
-1. **Editorial con movimiento (recomendada):** papel cálido, tipografía expresiva y curvas de marca; estructura despejada.
-2. **Geometría con contraste:** composición de bloques, bordes precisos, rojo y negro; neobrutalismo moderado sin agresividad tipográfica.
-3. **Capas ligeras:** base clara con transparencias puntuales y profundidad; glassmorfismo contenido con alternativas de alto contraste.
+No extender ninguna al resto del sitio hasta que el usuario elija. Tras la elección, reemplazar esta sección por las decisiones adoptadas.
 
-Recomendar una con razones ligadas al público y al contenido. Si el usuario no elige otra, avanzar con la primera. No desarrollar tres sitios completos. El usuario puede revisar resultados; no necesita buscar referencias.
+## Movimiento exigido en la exploración
+
+- Secuencia breve de entrada del hero (menos de 1,2 s en total), una vez por carga.
+- Una interacción significativa en la segunda sección, operable con teclado.
+- Botones con estados cuidados: reposo, hover, foco visible, activo y deshabilitado.
+- Scroll natural, texto legible durante toda la animación y versión con movimiento reducido.
 
 ## Color: propuesta de tokens
 
-Valores de partida compatibles con el logo; ajustar a partir de inspección y pruebas de contraste. No tratarlos como un manual oficial preexistente.
+Valores de marca compatibles con el logo; siguen vigentes. Ajustar a partir de pruebas de contraste. En tema oscuro, el rojo usado como texto o acento se aclara (`#E0514F`) porque `#A11312` no es legible sobre fondo oscuro.
 
 | Rol | Claro | Oscuro |
 |---|---|---|
@@ -43,10 +52,10 @@ En oscuro, mostrar el logo original en una superficie clara discreta hasta conta
 
 ## Tipografía y composición
 
-- Primera pareja a evaluar: Bricolage Grotesque para titulares y Manrope para cuerpo/UI. Son candidatas; verificar licencia, caracteres españoles/alemanes y archivos antes de incorporar.
+- La tipografía depende de la dirección elegida (Afiche: Archivo, con sus anchos variables; Cuaderno: Bricolage Grotesque + Manrope). Todas con licencia OFL y caracteres españoles/alemanes completos.
 - Máximo dos familias; servir archivos optimizados localmente cuando sea posible y usar fallbacks métricamente razonables.
 - Cuerpo 16–18 px, interlineado generoso; campos de móvil al menos 16 px. Evitar textos esenciales diminutos.
-- Titulares fluidos: aproximadamente 40–76 px según ancho y longitud, sin cortar palabras o diacríticos.
+- Titulares fluidos, sin cortar palabras ni diacríticos. La dirección Afiche usa un titular mucho mayor (hasta ~220 px) como estructura del hero.
 - Ancho de lectura 55–70 caracteres. Contenedor general aproximado 1200 px. Espaciado basado en múltiplos de 4/8, con densidad ajustada al contenido.
 - Radios moderados: 8–12 px en controles; superficies especiales 16–24 px. No hacer todo redondo por defecto.
 - No usar sombras si un borde o espacio resuelve mejor la separación. Una familia de iconos coherente; iconos acompañan etiquetas.

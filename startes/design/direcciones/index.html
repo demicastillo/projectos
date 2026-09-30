@@ -1,0 +1,792 @@
+<title>Direcciones StartEs</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Manrope:wght@400..800&display=swap">
+<style>
+/*
+  Exploración de dirección artística para StartEs: dos propuestas con el mismo contenido real.
+  A · Afiche: el titular es la estructura; grilla visible; un único campo rojo para consultar;
+      la escala 0–C2 como recurso gráfico que se vuelve interactivo en la segunda sección.
+  B · Cuaderno: papel cuadriculado de 5 mm con margen rojo y fichas de vocabulario (Karteikarten);
+      la ficha del hero se da vuelta del alemán al español; pestañas de fichero en la segunda sección.
+  Diseño deliberadamente de un solo tema (claro) mientras se elige la dirección.
+*/
+:root {
+  color-scheme: light;
+  --ink: #111111;
+  --ink-2: #4a4845;
+  --paper: #ffffff;
+  --red: #a11312;
+  --red-deep: #7e0e0d;
+  --gold: #eabf34;
+  --rule: #111111;
+  --hair: #d8d6d2;
+  --karo: #dde6ee;
+  --karo-strong: #c9d6e2;
+  --margin: #d9534f;
+  --card: #ffffff;
+  --card-yellow: #f7e39a;
+  --card-blue: #e4eef6;
+  --focus: #111111;
+
+  --f-poster: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: clip;
+  padding-bottom: 88px;
+}
+h1, h2, h3, p { margin: 0; }
+a { color: inherit; }
+img { display: block; max-width: 100%; height: auto; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[data-dir] { display: none; }
+body[data-show="a"] [data-dir="a"], body[data-show="b"] [data-dir="b"] { display: block; }
+
+/* ---------- Selector de exploración (no forma parte del diseño) ---------- */
+.switcher {
+  position: fixed;
+  left: 50%;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: #1b1b1b;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+  font: 600 14px/1 var(--f-body);
+}
+.switcher a {
+  color: #d9d6cf;
+  text-decoration: none;
+  padding: 11px 14px;
+  border-radius: 7px;
+  white-space: nowrap;
+}
+.switcher a[aria-current="true"] { background: #ffffff; color: #111111; }
+.switcher a:focus-visible { outline-color: var(--gold); }
+
+/* =====================================================================
+   A · AFICHE
+   ===================================================================== */
+.a { font-family: var(--f-poster); font-variation-settings: "wdth" 100; }
+.a-wrap { width: min(100% - 2 * var(--gutter), 1320px); margin-inline: auto; }
+
+/* Navegación */
+.a-nav { border-bottom: 2px solid var(--rule); background: var(--paper); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; }
+.a-nav__row { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; min-height: 68px; }
+.a-nav__logo { display: flex; align-items: center; padding-right: 24px; border-right: 2px solid var(--rule); }
+.a-nav__logo img { width: 64px; }
+.a-nav nav { display: flex; }
+.a-nav__links li { display: flex; }
+.a-nav__links { display: flex; align-items: stretch; margin: 0; padding: 0 0 0 8px; list-style: none; }
+.a-nav__links a {
+  display: flex; align-items: center; padding: 0 18px;
+  font-size: 15px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; text-decoration: none;
+  font-variation-settings: "wdth" 85;
+  position: relative;
+}
+.a-nav__links a::after {
+  content: ""; position: absolute; left: 18px; right: 18px; bottom: -2px; height: 4px; background: var(--ink);
+  transform: scaleX(0); transform-origin: left; transition: transform 220ms var(--ease-out);
+}
+.a-nav__links a:hover::after, .a-nav__links a:focus-visible::after, .a-nav__links a[aria-current="page"]::after { transform: scaleX(1); }
+.a-nav__cta { margin-right: calc(-1 * var(--gutter) + 0px); }
+.a-menu-btn { display: none; }
+
+/* Botón A (principio de Magic UI: relleno que nace de un punto + flecha) */
+.a-btn {
+  --bg: var(--red); --fg: #fff; --fill: var(--ink);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 14px;
+  min-height: 56px; padding: 0 26px;
+  background: var(--bg); color: var(--fg);
+  border: 0; border-radius: 0; cursor: pointer; text-decoration: none;
+  font: 700 16px/1 var(--f-poster); letter-spacing: .03em; text-transform: uppercase;
+  font-variation-settings: "wdth" 90;
+  transition: transform 120ms var(--ease);
+}
+.a-btn::before {
+  content: ""; position: absolute; z-index: -1; left: 26px; top: 50%;
+  width: 10px; height: 10px; margin-top: -5px; border-radius: 50%; background: var(--fill);
+  transform: scale(0); transition: transform 420ms var(--ease-out);
+}
+.a-btn .dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; flex: none; transition: opacity 150ms; }
+.a-btn .arr { width: 20px; height: 20px; margin-left: -34px; opacity: 0; transition: margin 260ms var(--ease-out), opacity 200ms; }
+.a-btn:hover::before, .a-btn:focus-visible::before { transform: scale(90); }
+.a-btn:hover .dot, .a-btn:focus-visible .dot { opacity: 0; }
+.a-btn:hover .arr, .a-btn:focus-visible .arr { margin-left: 0; opacity: 1; }
+.a-btn:active { transform: translateY(2px); }
+.a-btn:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.a-btn--light { --bg: #fff; --fg: var(--ink); --fill: var(--gold); }
+.a-btn[aria-disabled="true"] { --bg: #bdbab5; cursor: not-allowed; }
+.a-btn[aria-disabled="true"]::before { display: none; }
+.a-nav__cta .a-btn { height: 100%; min-height: 68px; padding: 0 var(--gutter) 0 28px; }
+
+/* Hero */
+.a-hero { padding-block: clamp(28px, 5vw, 56px) 0; }
+.a-hero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; }
+.a-title {
+  grid-column: 1 / -1;
+  font-weight: 800; font-variation-settings: "wdth" 72;
+  font-size: clamp(76px, 20.5vw, 272px); line-height: .84; letter-spacing: -.035em;
+  text-transform: none;
+}
+.a-title .ln { display: block; overflow: clip; padding-bottom: .06em; margin-bottom: -.06em; }
+.a-title .ln > span { display: inline-block; }
+.a-title .ln--2 { padding-left: 23%; }
+.a-hero__grid { position: relative; }
+.a-kicker {
+  position: absolute; right: 0; top: calc(min(20.5vw, 272px) * .34); text-align: right;
+  font-size: clamp(18px, 1.9vw, 28px); font-weight: 500; line-height: 1.15; font-variation-settings: "wdth" 115;
+  max-width: 13ch; padding-bottom: 1.4em;
+}
+.a-band {
+  display: grid; grid-template-columns: 5fr 3fr 4fr; margin-top: clamp(24px, 3vw, 40px);
+  border-top: 2px solid var(--rule); position: relative;
+}
+.a-band > * { padding: 22px 24px 26px 0; }
+.a-band > * + * { padding-left: 24px; border-left: 1px solid var(--hair); }
+.a-lead { font-family: var(--f-body); font-size: 18px; color: var(--ink-2); max-width: 44ch; }
+.a-facts { list-style: none; margin: 0; display: grid; gap: 6px; font-weight: 600; font-size: 17px; font-variation-settings: "wdth" 95; }
+.a-facts li { display: flex; gap: 10px; align-items: baseline; }
+.a-facts li::before { content: "—"; color: var(--ink-2); }
+.a-ask { background: var(--red); color: #fff; display: grid; gap: 18px; align-content: space-between; padding-left: 28px !important; border-left: 0 !important; }
+.a-ask p { font-size: clamp(22px, 2vw, 28px); font-weight: 600; line-height: 1.12; font-variation-settings: "wdth" 90; }
+.a-ask .a-btn { --bg: #fff; --fg: var(--ink); --fill: var(--gold); justify-self: start; }
+.a-ask .a-btn:focus-visible { outline-color: #fff; }
+
+/* Regla de niveles */
+.a-ruler { position: relative; margin-top: 0; padding-block: 18px 34px; }
+.a-ruler__track { position: absolute; left: 0; right: 0; top: 18px; height: 2px; background: var(--rule); }
+.a-ruler__fill { position: absolute; left: 0; right: 0; top: 16px; height: 6px; background: var(--gold); transform-origin: left; }
+.a-ruler ol { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, 1fr); }
+.a-ruler li { position: relative; padding-top: 18px; }
+.a-ruler li::before { content: ""; position: absolute; left: 0; top: -6px; width: 2px; height: 16px; background: var(--rule); }
+.a-ruler a { display: inline-flex; flex-direction: column; text-decoration: none; padding: 4px 8px 4px 10px; margin-left: -10px; }
+.a-ruler b { font-size: clamp(20px, 2.4vw, 34px); font-weight: 800; font-variation-settings: "wdth" 80; line-height: 1; }
+.a-ruler small { font-size: 13px; color: var(--ink-2); font-weight: 500; }
+.a-ruler a:hover b { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.a-ruler__caption { position: absolute; right: 0; bottom: 8px; font-size: 13px; color: var(--ink-2); }
+
+/* Sección 2 · niveles */
+.a-levels { border-top: 2px solid var(--rule); padding-block: clamp(48px, 7vw, 96px); scroll-margin-top: 72px; }
+.a-levels__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; row-gap: 16px; align-items: end; margin-bottom: clamp(28px, 4vw, 48px); }
+.a-levels__head h2 { grid-column: 1 / 8; font-size: clamp(44px, 7vw, 104px); font-weight: 800; line-height: .9; letter-spacing: -.03em; font-variation-settings: "wdth" 72; }
+.a-levels__head p { grid-column: 9 / -1; font-family: var(--f-body); color: var(--ink-2); max-width: 40ch; }
+
+.a-scale { display: flex; list-style: none; margin: 0; padding: 0; border: 2px solid var(--rule); min-height: 380px; }
+.a-scale > li { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; border-left: 1px solid var(--rule); transition: flex-grow 520ms var(--ease-out), background-color 300ms var(--ease); }
+.a-scale > li:first-child { border-left: 0; }
+.a-scale > li.is-open { flex-grow: 4.2; background: var(--ink); color: #fff; }
+.a-scale__btn {
+  all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 6px;
+  padding: 20px 18px; width: 100%; font-family: var(--f-poster);
+}
+.a-scale__btn:focus-visible { outline: 3px solid var(--gold); outline-offset: -6px; }
+.a-scale__code { font-size: clamp(34px, 3.6vw, 56px); font-weight: 800; line-height: .9; font-variation-settings: "wdth" 75; }
+.a-scale__name { font-size: 14px; font-weight: 600; letter-spacing: .02em; color: inherit; opacity: .75; }
+.a-scale > li:not(.is-open) .a-scale__btn:hover .a-scale__code { color: var(--red); }
+.a-scale__bar { height: 6px; margin: auto 18px 18px; background: var(--hair); position: relative; }
+.a-scale__bar::after { content: ""; position: absolute; inset: 0; background: var(--gold); transform-origin: left; transform: scaleX(var(--p)); }
+.a-scale > li.is-open .a-scale__bar { background: #3a3a3a; }
+.a-scale__panel { padding: 0 18px 8px; display: grid; gap: 18px; align-content: start; }
+.a-scale__panel[hidden] { display: none !important; }
+.a-scale__panel p { font-family: var(--f-body); font-size: 17px; line-height: 1.55; color: #e9e6df; max-width: 36ch; }
+.a-scale__panel .a-btn { justify-self: start; --bg: var(--red); --fill: #fff; }
+.a-scale__panel .a-btn:hover, .a-scale__panel .a-btn:focus-visible { --fg: var(--ink); }
+.a-scale__panel .a-btn:focus-visible { outline-color: #fff; }
+.a-scale > li.is-open .a-scale__panel { animation: a-panel 420ms 120ms var(--ease-out) both; }
+@keyframes a-panel { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.a-scale__note { margin-top: 14px; font-family: var(--f-body); font-size: 14px; color: var(--ink-2); }
+
+/* Entrada A */
+.js .a-title .ln > span { animation: a-rise 820ms var(--ease-out) both; }
+.js .a-title .ln--2 > span { animation-delay: 110ms; }
+.js .a-kicker { animation: a-fade 600ms 380ms var(--ease) both; }
+.js .a-band { animation: a-fade 500ms 460ms var(--ease) both; }
+.js .a-band::before { content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 2px; background: var(--paper); transform-origin: right; animation: a-uncover 700ms 250ms var(--ease-out) both; }
+.js .a-ask { animation: a-wipe 640ms 560ms var(--ease-out) both; }
+.js .a-ruler__fill { animation: a-grow 900ms 700ms var(--ease-out) both; }
+@keyframes a-rise { from { transform: translateY(104%); } to { transform: none; } }
+@keyframes a-fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes a-uncover { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@keyframes a-wipe { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes a-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (max-width: 1000px) {
+  .a-nav__links a { padding: 0 11px; font-size: 14px; }
+  .a-band { grid-template-columns: 1fr 1fr; }
+  .a-ask { grid-column: 1 / -1; }
+  .a-levels__head h2, .a-levels__head p { grid-column: 1 / -1; }
+  .a-scale { flex-direction: column; min-height: 0; }
+  .a-scale > li { border-left: 0; border-top: 1px solid var(--rule); }
+  .a-scale > li:first-child { border-top: 0; }
+  .a-scale__btn { flex-direction: row; align-items: baseline; gap: 14px; padding: 16px; }
+  .a-scale__code { font-size: 34px; min-width: 2.2ch; }
+  .a-scale__bar { display: none; }
+  .a-scale__panel { padding: 0 16px 20px; }
+}
+@media (max-width: 760px) {
+  .a-nav__links, .a-nav__cta { display: none; }
+  .a-nav__row { grid-template-columns: auto 1fr auto; min-height: 60px; }
+  .a-nav__logo { border-right: 0; }
+  .a-nav__logo img { width: 56px; }
+  .a-menu-btn {
+    display: inline-flex; align-items: center; gap: 10px; grid-column: 3; align-self: center;
+    background: none; border: 2px solid var(--ink); min-height: 44px; padding: 0 14px; cursor: pointer;
+    font: 700 14px/1 var(--f-poster); letter-spacing: .06em; text-transform: uppercase; color: var(--ink);
+  }
+  .a-menu-btn:active { transform: translateY(1px); }
+  .a-title .ln--2 { padding-left: 0; text-align: right; }
+  .a-kicker { position: static; grid-column: 1 / -1; text-align: left; max-width: none; padding: 18px 0 0; }
+  .a-title { font-size: clamp(76px, 25vw, 200px); }
+  .a-band { grid-template-columns: 1fr; }
+  .a-band > * + * { padding-left: 0; border-left: 0; border-top: 1px solid var(--hair); }
+  .a-ask { padding: 24px !important; margin-inline: calc(-1 * var(--gutter)); border-top: 0 !important; }
+  .a-ruler ol { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .a-ruler small { display: none; }
+  .a-ruler__caption { position: static; display: block; margin-top: 10px; }
+}
+.a-menu { position: fixed; inset: 60px 0 0; z-index: 19; background: var(--paper); padding: 16px var(--gutter) 120px; overflow-y: auto; }
+.a-menu[hidden] { display: none; }
+.a-menu ul { list-style: none; margin: 0 0 24px; padding: 0; }
+.a-menu li { border-bottom: 2px solid var(--rule); }
+.a-menu li a { display: block; padding: 14px 0; font-size: 44px; font-weight: 800; line-height: 1; text-decoration: none; font-variation-settings: "wdth" 72; }
+.a-menu .a-btn { width: 100%; justify-content: center; }
+
+/* =====================================================================
+   B · CUADERNO
+   ===================================================================== */
+.b {
+  --b-margin-x: calc(var(--gutter) + clamp(28px, 5vw, 72px));
+  font-family: var(--f-body);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--karo) 1px, transparent 1px),
+    linear-gradient(90deg, var(--karo) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: -1px -1px;
+  position: relative;
+}
+.b::before { /* margen rojo de cuaderno escolar alemán */
+  content: ""; position: absolute; top: 0; bottom: 0; left: var(--b-margin-x); width: 2px; background: var(--margin); opacity: .75;
+  transform-origin: top;
+}
+.b-wrap { padding-left: calc(var(--b-margin-x) + clamp(20px, 3vw, 40px)); padding-right: var(--gutter); max-width: 1400px; }
+
+/* Navegación B */
+.b-nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: rgba(255,255,255,.94); border-bottom: 1px solid var(--karo-strong); }
+.b-nav__row { display: flex; align-items: center; gap: 28px; min-height: 76px; padding-left: var(--gutter); padding-right: var(--gutter); max-width: 1400px; }
+.b-nav__logo img { width: 70px; }
+.b-nav nav { margin-right: auto; }
+.b-nav__links { display: flex; gap: 6px; list-style: none; margin: 0 0 0 12px; padding: 0; }
+.b-nav__links a { display: block; padding: 8px 12px; border-radius: 8px; font-weight: 600; font-size: 16px; text-decoration: none; transition: background-color 160ms var(--ease); }
+.b-nav__links a:hover { background: var(--card-blue); }
+.b-nav__links a[aria-current="page"] { background: var(--card-yellow); }
+.b-menu-btn { display: none; }
+
+/* Botón B (mismo principio, lenguaje propio: punto amarillo que cubre) */
+.b-btn {
+  --bg: var(--ink); --fg: #fff; --fill: var(--gold); --fg-hover: var(--ink);
+  position: relative; isolation: isolate; overflow: hidden;
+  display: inline-flex; align-items: center; gap: 12px;
+  min-height: 52px; padding: 0 22px 0 18px;
+  background: var(--bg); color: var(--fg); border: 2px solid var(--ink); border-radius: 12px;
+  font: 700 16px/1 var(--f-body); text-decoration: none; cursor: pointer;
+  transition: color 260ms var(--ease), transform 120ms var(--ease), box-shadow 200ms var(--ease);
+  box-shadow: 0 3px 0 var(--ink);
+}
+.b-btn::before {
+  content: ""; position: absolute; z-index: -1; left: 20px; top: 50%; width: 10px; height: 10px; margin-top: -5px;
+  border-radius: 50%; background: var(--fill); transform: scale(1); transition: transform 440ms var(--ease-out);
+}
+.b-btn .lbl { padding-left: 22px; }
+.b-btn .arr { width: 18px; height: 18px; transition: transform 260ms var(--ease-out); }
+.b-btn:hover, .b-btn:focus-visible { color: var(--fg-hover); }
+.b-btn:hover::before, .b-btn:focus-visible::before { transform: scale(60); }
+.b-btn:hover .arr, .b-btn:focus-visible .arr { transform: translateX(4px); }
+.b-btn:active { transform: translateY(3px); box-shadow: 0 0 0 var(--ink); }
+.b-btn--ghost { --bg: #fff; --fg: var(--ink); --fill: var(--card-blue); }
+.b-btn[aria-disabled="true"] { --bg: #d6d4cf; --fg: #5b5955; border-color: #b9b6b0; box-shadow: none; cursor: not-allowed; }
+.b-btn[aria-disabled="true"]::before { display: none; }
+
+/* Hero B */
+.b-hero { padding-block: clamp(36px, 6vw, 80px) clamp(40px, 6vw, 88px); }
+.b-hero__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 56px); align-items: end; }
+.b-stack { position: relative; grid-column: 1 / -1; max-width: 900px; perspective: 1600px; }
+.b-card {
+  position: relative; background: var(--card); border: 1px solid #cfcac1; border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 18px 40px -18px rgba(40, 40, 60, .28);
+}
+.b-peek { position: absolute; width: 58%; aspect-ratio: 5 / 3; display: flex; align-items: flex-end; padding: 18px 22px; font-family: var(--f-display); font-weight: 700; font-size: clamp(18px, 2vw, 26px); }
+.b-peek--1 { right: -2%; top: -9%; transform: rotate(4deg); background: var(--card-yellow); border-color: #e1c86d; }
+.b-peek--2 { right: 7%; top: -3%; transform: rotate(-2.5deg); background: var(--card-blue); border-color: #bccddc; }
+.b-peek span { margin-left: auto; }
+.b-flip { position: relative; transform: rotate(-1.2deg); }
+.b-flip.is-turning { animation: b-turn 520ms var(--ease) both; }
+@keyframes b-turn { 0% { transform: rotate(-1.2deg) scaleX(1); } 50% { transform: rotate(-1.2deg) scaleX(.04); } 100% { transform: rotate(-1.2deg) scaleX(1); } }
+.b-flip .b-face--de, .b-flip.is-de .b-face--es { display: none; }
+.b-flip.is-de .b-face--de { display: flex; }
+.b-face {
+  min-height: clamp(300px, 36vw, 440px); padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 56px) clamp(24px, 3vw, 36px);
+  display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
+  background-image: repeating-linear-gradient(transparent 0 39px, var(--karo-strong) 39px 40px);
+}
+.b-face__meta { margin: calc(-1 * clamp(24px, 4vw, 48px)) calc(-1 * clamp(20px, 4vw, 56px)) 0; padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 56px) 16px; border-radius: 6px 6px 0 0; border-bottom: 2px solid var(--margin); background: var(--card); }
+.b-face--de .b-face__meta { background: var(--card); }
+.b-face__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; color: var(--ink-2); }
+.b-lang { display: inline-flex; align-items: center; gap: 8px; }
+.b-lang i { font-style: normal; display: inline-grid; place-items: center; min-width: 30px; height: 24px; padding: 0 6px; border: 1.5px solid var(--ink); border-radius: 5px; color: var(--ink); font-size: 12px; letter-spacing: .06em; }
+.b-title { font-family: var(--f-display); font-weight: 750; font-size: clamp(52px, 9.2vw, 132px); line-height: .92; letter-spacing: -.035em; }
+.b-sub { font-family: var(--f-display); font-weight: 500; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: -.01em; color: var(--ink-2); }
+.b-turn {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px;
+  background: #fff; border: 1.5px solid var(--ink); border-radius: 8px; cursor: pointer; font: 700 14px/1 var(--f-body); color: var(--ink);
+  transition: background-color 160ms var(--ease);
+}
+.b-turn:hover { background: var(--card-yellow); }
+.b-turn svg { width: 18px; height: 18px; transition: transform 400ms var(--ease-out); }
+.b-turn:hover svg { transform: rotate(-180deg); }
+.b-hero__copy { grid-column: 1; display: grid; gap: 22px; padding-top: clamp(28px, 4vw, 44px); }
+.b-lead { font-size: 19px; color: var(--ink-2); max-width: 50ch; background: rgba(255,255,255,.86); }
+.b-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+.b-facts { grid-column: 2; list-style: none; margin: 0; padding: 0; display: grid; gap: 0; align-self: end; background: rgba(255,255,255,.86); }
+.b-facts li { display: grid; grid-template-columns: 76px 1fr; gap: 12px; padding: 11px 0; border-top: 1px solid var(--karo-strong); font-size: 15px; }
+.b-facts li:last-child { border-bottom: 1px solid var(--karo-strong); }
+.b-facts b { font-family: var(--f-display); font-size: 15px; }
+
+/* Sección 2 B · fichero */
+.b-goals { padding-block: clamp(40px, 6vw, 88px) clamp(56px, 8vw, 112px); border-top: 1px solid var(--karo-strong); }
+.b-goals h2 { font-family: var(--f-display); font-size: clamp(38px, 5.2vw, 72px); font-weight: 750; line-height: 1; letter-spacing: -.03em; max-width: 14ch; margin-bottom: clamp(24px, 3vw, 40px); }
+.b-tabs { display: flex; gap: 6px; align-items: flex-end; padding-left: 14px; }
+.b-tab {
+  appearance: none; border: 1.5px solid #cfcac1; border-bottom: 0; border-radius: 12px 12px 0 0;
+  background: var(--tab, #f1efe9); color: var(--ink); cursor: pointer;
+  font: 700 16px/1.2 var(--f-body); padding: 14px 18px 12px; min-height: 50px; position: relative; top: 1.5px;
+  transition: padding 240ms var(--ease-out), background-color 200ms var(--ease);
+}
+.b-tab:nth-child(1) { --tab: #fbf1c7; }
+.b-tab:nth-child(2) { --tab: #e4eef6; }
+.b-tab:nth-child(3) { --tab: #f6e0dc; }
+.b-tab:nth-child(4) { --tab: #e5f0e3; }
+.b-tab[aria-selected="true"] { background: #fff; padding-bottom: 18px; z-index: 2; }
+.b-tab:hover:not([aria-selected="true"]) { padding-bottom: 16px; }
+.b-tab:focus-visible { outline-offset: -5px; }
+.b-folder { position: relative; background: #fff; border: 1.5px solid #cfcac1; border-radius: 4px 14px 14px 14px; box-shadow: 0 20px 40px -24px rgba(40,40,60,.35); overflow: hidden; }
+.b-panel {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px);
+  padding: clamp(24px, 4vw, 48px);
+  background-image: repeating-linear-gradient(transparent 0 35px, var(--karo) 35px 36px);
+}
+.b-panel[hidden] { display: none; }
+.b-panel h3 { font-family: var(--f-display); font-size: clamp(28px, 3.4vw, 44px); line-height: 1.02; letter-spacing: -.02em; font-weight: 750; margin-bottom: 14px; }
+.b-panel p { color: var(--ink-2); max-width: 48ch; }
+.b-panel .b-actions { margin-top: 24px; }
+.b-next { list-style: none; margin: 0; padding: 20px 22px; border: 1.5px dashed #bfb9ae; border-radius: 10px; background: rgba(255,255,255,.9); display: grid; gap: 10px; align-self: start; counter-reset: s; }
+.b-next__title { font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2); }
+.b-next ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.b-next li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; font-size: 16px; }
+.b-next li::before { content: counter(s); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--ink); font-weight: 800; font-size: 13px; }
+.b-panel.enter-from-right { animation: b-in-r 420ms var(--ease-out) both; }
+.b-panel.enter-from-left { animation: b-in-l 420ms var(--ease-out) both; }
+@keyframes b-in-r { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: none; } }
+@keyframes b-in-l { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+
+/* Entrada B */
+.js .b::before { animation: b-draw 700ms var(--ease-out) both; }
+.js .b-peek--1 { animation: b-deal-1 720ms 150ms var(--ease-out) both; }
+.js .b-peek--2 { animation: b-deal-2 720ms 60ms var(--ease-out) both; }
+.js .b-stack > .b-flip { animation: b-deal-0 760ms var(--ease-out) both; }
+.js .b-hero__copy, .js .b-facts { animation: a-fade 520ms 900ms var(--ease) both; }
+@keyframes b-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes b-deal-0 { from { opacity: 0; translate: 0 40px; } to { opacity: 1; translate: 0 0; } }
+@keyframes b-deal-1 { from { opacity: 0; transform: translate(-30px, 50px) rotate(-6deg); } to { opacity: 1; transform: rotate(4deg); } }
+@keyframes b-deal-2 { from { opacity: 0; transform: translate(-20px, 40px) rotate(3deg); } to { opacity: 1; transform: rotate(-2.5deg); } }
+
+@media (max-width: 900px) {
+  .b-nav__links { display: none; }
+  .b-nav .b-btn { display: none; }
+  .b-menu-btn {
+    display: inline-flex; align-items: center; margin-left: auto; min-height: 44px; padding: 0 16px; border: 1.5px solid var(--ink); border-radius: 10px;
+    background: #fff; font: 700 15px/1 var(--f-body); color: var(--ink); cursor: pointer;
+  }
+  .b-hero__grid { grid-template-columns: 1fr; }
+  .b-facts { grid-column: 1; }
+  .b-panel { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .b { --b-margin-x: 22px; background-size: 16px 16px; }
+  .b-wrap { padding-left: 36px; padding-right: 16px; }
+  .b-peek { width: 70%; font-size: 15px; padding: 10px 14px; }
+  .b-peek--1 { top: -8%; right: -2%; }
+  .b-peek--2 { top: -4%; }
+  .b-face { min-height: 280px; }
+  .b-lang-txt { display: none; }
+  .b-title { font-size: clamp(52px, 17vw, 80px); }
+  .b-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding-left: 0; margin-bottom: 8px; }
+  .b-tab, .b-tab[aria-selected="true"], .b-tab:hover:not([aria-selected="true"]) { border-bottom: 1.5px solid #cfcac1; border-radius: 10px; padding: 12px 12px; top: 0; font-size: 15px; text-align: left; }
+  .b-tab[aria-selected="true"] { border-color: var(--ink); box-shadow: inset 0 -4px 0 var(--ink); }
+  .b-folder { border-radius: 14px; }
+  .b-actions .b-btn { width: 100%; justify-content: flex-start; }
+}
+.b-menu { position: fixed; inset: 76px 0 0; z-index: 19; background: var(--paper); padding: 20px var(--gutter) 120px; overflow-y: auto; }
+.b-menu[hidden] { display: none; }
+.b-menu ul { list-style: none; margin: 0 0 24px; padding: 0; }
+.b-menu li a { display: block; padding: 14px 0; border-bottom: 1px solid var(--karo-strong); font-family: var(--f-display); font-size: 34px; font-weight: 700; text-decoration: none; }
+
+/* ---------- Movimiento reducido ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; }
+}
+</style>
+
+<body data-show="a">
+<script>document.documentElement.classList.add("js");</script>
+
+<!-- ===================== A · AFICHE ===================== -->
+<div data-dir="a" class="a" id="dir-a">
+  <header class="a-nav">
+    <div class="a-wrap a-nav__row">
+      <a class="a-nav__logo" href="#top-a" aria-label="StartEs, inicio"><img src="startes-logo-240.png" width="240" height="187" alt="StartEs"></a>
+      <nav aria-label="Principal"><ul class="a-nav__links">
+        <li><a href="#niveles-a">Clases</a></li>
+        <li><a href="#niveles-a">Exámenes</a></li>
+        <li><a href="#niveles-a">La academia</a></li>
+        <li><a href="#niveles-a">Contacto</a></li>
+      </ul></nav>
+      <div class="a-nav__cta"><a class="a-btn" href="#niveles-a"><span class="dot" aria-hidden="true"></span>Consultar<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+      <button class="a-menu-btn" type="button" aria-expanded="false" aria-controls="a-menu">Menú</button>
+    </div>
+  </header>
+  <div class="a-menu" id="a-menu" hidden>
+    <ul>
+      <li><a href="#niveles-a">Clases</a></li>
+      <li><a href="#niveles-a">Exámenes</a></li>
+      <li><a href="#niveles-a">La academia</a></li>
+      <li><a href="#niveles-a">Contacto</a></li>
+    </ul>
+    <a class="a-btn" href="#niveles-a"><span class="dot" aria-hidden="true"></span>Consultar por clases<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <main id="top-a">
+    <section class="a-hero" aria-labelledby="a-title">
+      <div class="a-wrap">
+        <div class="a-hero__grid">
+          <h1 class="a-title" id="a-title">
+            <span class="ln ln--1"><span>Aprendé</span></span>
+            <span class="ln ln--2"><span>alemán.</span></span>
+          </h1>
+          <p class="a-kicker">Hacé lugar a lo que viene.</p>
+        </div>
+
+        <div class="a-band">
+          <p class="a-lead">Clases individuales y grupales, desde tus primeras palabras hasta niveles avanzados. También preparación de exámenes y español para germanoparlantes.</p>
+          <ul class="a-facts" aria-label="La academia en resumen">
+            <li>Clases online</li>
+            <li>Individuales o grupales</li>
+            <li>Exámenes de alemán</li>
+            <li>Español para germanoparlantes</li>
+          </ul>
+          <div class="a-ask">
+            <p>Contanos qué querés aprender. Te escribimos para conversar.</p>
+            <a class="a-btn" href="#niveles-a"><span class="dot" aria-hidden="true"></span>Consultar por clases<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+
+        <nav class="a-ruler" aria-label="Niveles de alemán">
+          <span class="a-ruler__track" aria-hidden="true"></span>
+          <span class="a-ruler__fill" aria-hidden="true"></span>
+          <ol>
+            <li><a href="#niveles-a" data-level="0"><b>0</b><small>Desde cero</small></a></li>
+            <li><a href="#niveles-a" data-level="1"><b>A1</b><small>Inicial</small></a></li>
+            <li><a href="#niveles-a" data-level="2"><b>A2</b><small>Básico</small></a></li>
+            <li><a href="#niveles-a" data-level="3"><b>B1</b><small>Intermedio</small></a></li>
+            <li><a href="#niveles-a" data-level="4"><b>B2</b><small>Intermedio alto</small></a></li>
+            <li><a href="#niveles-a" data-level="5"><b>C1</b><small>Avanzado</small></a></li>
+            <li><a href="#niveles-a" data-level="6"><b>C2</b><small>Maestría</small></a></li>
+          </ol>
+          <span class="a-ruler__caption">Niveles del Marco Común Europeo de Referencia</span>
+        </nav>
+      </div>
+    </section>
+
+    <section class="a-levels" id="niveles-a" aria-labelledby="a-levels-title">
+      <div class="a-wrap">
+        <div class="a-levels__head">
+          <h2 id="a-levels-title">Desde cero hasta&nbsp;C2.</h2>
+          <p>Elegí un nivel para ver qué vas a poder hacer. Si no sabés cuál es el tuyo, lo conversamos antes de empezar.</p>
+        </div>
+        <ul class="a-scale" id="a-scale"></ul>
+        <p class="a-scale__note">Con las flechas del teclado podés recorrer los niveles.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ===================== B · CUADERNO ===================== -->
+<div data-dir="b" class="b" id="dir-b">
+  <header class="b-nav">
+    <div class="b-nav__row">
+      <a class="b-nav__logo" href="#top-b" aria-label="StartEs, inicio"><img src="startes-logo-240.png" width="240" height="187" alt="StartEs"></a>
+      <nav aria-label="Principal"><ul class="b-nav__links">
+        <li><a href="#fichero-b">Clases</a></li>
+        <li><a href="#fichero-b">Exámenes</a></li>
+        <li><a href="#fichero-b">La academia</a></li>
+        <li><a href="#fichero-b">Contacto</a></li>
+      </ul></nav>
+      <a class="b-btn" href="#fichero-b"><span class="lbl">Consultar por clases</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="b-menu-btn" type="button" aria-expanded="false" aria-controls="b-menu">Menú</button>
+    </div>
+  </header>
+  <div class="b-menu" id="b-menu" hidden>
+    <ul>
+      <li><a href="#fichero-b">Clases</a></li>
+      <li><a href="#fichero-b">Exámenes</a></li>
+      <li><a href="#fichero-b">La academia</a></li>
+      <li><a href="#fichero-b">Contacto</a></li>
+    </ul>
+    <a class="b-btn" href="#fichero-b"><span class="lbl">Consultar por clases</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+
+  <main id="top-b">
+    <section class="b-hero" aria-labelledby="b-title">
+      <div class="b-wrap b-hero__grid">
+        <div class="b-stack">
+          <div class="b-card b-peek b-peek--1" aria-hidden="true"><span>A1 → C2</span></div>
+          <div class="b-card b-peek b-peek--2" aria-hidden="true"><span>online</span></div>
+          <div class="b-flip" id="b-flip">
+            <div class="b-card b-face b-face--es">
+              <div class="b-face__meta">
+                <span class="b-lang"><i>ES</i><span class="b-lang-txt">Academia de idiomas</span></span>
+                <button class="b-turn" type="button" id="b-turn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg><span>Ver en alemán</span></button>
+              </div>
+              <h1 class="b-title" id="b-title">Aprendé alemán.</h1>
+              <p class="b-sub">Hacé lugar a lo que viene.</p>
+            </div>
+            <div class="b-card b-face b-face--de" lang="de">
+              <div class="b-face__meta">
+                <span class="b-lang"><i>DE</i><span class="b-lang-txt">Sprachschule</span></span>
+                <button class="b-turn" type="button" id="b-turn-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></svg><span lang="es">Ver en español</span></button>
+              </div>
+              <p class="b-title">Deutsch lernen.</p>
+              <p class="b-sub">Platz machen für das, was kommt.</p>
+            </div>
+          </div>
+        </div>
+        <div class="b-hero__copy">
+          <p class="b-lead">Clases online individuales y grupales, desde tus primeras palabras hasta niveles avanzados. También preparación de exámenes y español para germanoparlantes.</p>
+          <div class="b-actions">
+            <a class="b-btn" href="#fichero-b"><span class="lbl">Consultar por clases</span><svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="b-btn b-btn--ghost" href="#fichero-b"><span class="lbl">Conocer las propuestas</span></a>
+          </div>
+        </div>
+        <ul class="b-facts" aria-label="La academia en resumen">
+          <li><b>Dónde</b><span>Online, desde donde estés</span></li>
+          <li><b>Niveles</b><span>Desde cero hasta C2</span></li>
+          <li><b>Formato</b><span>Individual o grupal</span></li>
+          <li><b>Idiomas</b><span>Alemán · Español para germanoparlantes</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="b-goals" id="fichero-b" aria-labelledby="b-goals-title">
+      <div class="b-wrap">
+        <h2 id="b-goals-title">¿Qué querés lograr?</h2>
+        <div class="b-tabs" role="tablist" aria-label="Objetivos" id="b-tabs"></div>
+        <div class="b-folder" id="b-folder"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="switcher" aria-label="Elegir dirección">
+  <a href="#afiche" data-to="a" aria-current="true">A · Afiche</a>
+  <a href="#cuaderno" data-to="b" aria-current="false">B · Cuaderno</a>
+</nav>
+
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var arrow = '<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  /* ---------- Selector A / B ---------- */
+  function show(which) {
+    document.body.dataset.show = which;
+    document.querySelectorAll(".switcher a").forEach(function (a) { a.setAttribute("aria-current", a.dataset.to === which ? "true" : "false"); });
+    // Reinicia la secuencia de entrada al cambiar de dirección.
+    var root = document.getElementById("dir-" + which);
+    root.style.display = "none"; void root.offsetWidth; root.style.display = "";
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+  var initial = location.hash === "#cuaderno" ? "b" : "a";
+  document.body.dataset.show = initial;
+  document.querySelectorAll(".switcher a").forEach(function (a) {
+    a.setAttribute("aria-current", a.dataset.to === initial ? "true" : "false");
+    a.addEventListener("click", function (e) { e.preventDefault(); show(a.dataset.to); history.replaceState(null, "", a.getAttribute("href")); });
+  });
+
+  /* ---------- Menús móviles ---------- */
+  function menu(btnSel, panelSel) {
+    var btn = document.querySelector(btnSel), panel = document.querySelector(panelSel);
+    function set(open, focusBack) {
+      btn.setAttribute("aria-expanded", String(open));
+      btn.textContent = open ? "Cerrar" : "Menú";
+      panel.hidden = !open;
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) panel.querySelector("a").focus();
+      else if (focusBack) btn.focus();
+    }
+    btn.addEventListener("click", function () { set(btn.getAttribute("aria-expanded") !== "true", true); });
+    panel.addEventListener("click", function (e) { if (e.target.closest("a")) set(false, false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !panel.hidden) set(false, true); });
+  }
+  menu(".a-menu-btn", "#a-menu");
+  menu(".b-menu-btn", "#b-menu");
+
+  /* ---------- A · escala de niveles (acordeón horizontal) ---------- */
+  var levels = [
+    ["0", "Desde cero", "Tus primeras palabras. Aprendés a presentarte, saludar y entender frases muy simples, sin conocimientos previos.", "Desde cero"],
+    ["A1", "Inicial", "Te presentás, hablás de vos y de tu entorno y manejás situaciones cotidianas con frases sencillas.", "A1"],
+    ["A2", "Básico", "Contás experiencias, hacés planes y te arreglás en compras, viajes y trámites simples.", "A2"],
+    ["B1", "Intermedio", "Te desenvolvés con más autonomía: opinás, explicás y seguís conversaciones sobre temas conocidos.", "B1"],
+    ["B2", "Intermedio alto", "Argumentás, entendés textos extensos y conversás con fluidez con hablantes nativos.", "B2"],
+    ["C1", "Avanzado", "Usás el idioma con precisión en contextos académicos y profesionales.", "C1"],
+    ["C2", "Maestría", "Afinás matices, registro y expresión, cerca de un hablante nativo.", "C2"],
+    ["?", "No sé mi nivel", "No hace falta saberlo. Contanos qué estudiaste y cuándo, y lo conversamos antes de empezar. No hay examen de nivel previo.", "No sé mi nivel"]
+  ];
+  var scale = document.getElementById("a-scale");
+  levels.forEach(function (l, i) {
+    var li = document.createElement("li");
+    var p = l[0] === "?" ? 0 : (i + 1) / 7;
+    li.innerHTML =
+      '<button class="a-scale__btn" type="button" id="a-lv-' + i + '" aria-expanded="false" aria-controls="a-lvp-' + i + '">' +
+        '<span class="a-scale__code">' + l[0] + '</span><span class="a-scale__name">' + l[1] + '</span></button>' +
+      '<div class="a-scale__panel" id="a-lvp-' + i + '" role="region" aria-labelledby="a-lv-' + i + '" hidden>' +
+        '<p>' + l[2] + '</p>' +
+        '<a class="a-btn" href="#niveles-a"><span class="dot" aria-hidden="true"></span>' + (l[0] === "?" ? "Consultar" : "Consultar desde " + l[0]) + arrow + '</a>' +
+      '</div>' +
+      '<span class="a-scale__bar" aria-hidden="true" style="--p:' + p + '"></span>';
+    scale.appendChild(li);
+  });
+  var items = scale.children;
+  function openLevel(i, focus) {
+    Array.prototype.forEach.call(items, function (li, j) {
+      var on = j === i;
+      li.classList.toggle("is-open", on);
+      li.querySelector("button").setAttribute("aria-expanded", String(on));
+      li.querySelector(".a-scale__panel").hidden = !on;
+    });
+    if (focus) items[i].querySelector("button").focus();
+  }
+  openLevel(1, false);
+  scale.addEventListener("click", function (e) {
+    var b = e.target.closest(".a-scale__btn"); if (!b) return;
+    openLevel(Array.prototype.indexOf.call(items, b.parentElement), false);
+  });
+  scale.addEventListener("keydown", function (e) {
+    var b = e.target.closest(".a-scale__btn"); if (!b) return;
+    var i = Array.prototype.indexOf.call(items, b.parentElement), n = items.length, k = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") k = (i + 1) % n;
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") k = (i - 1 + n) % n;
+    if (e.key === "Home") k = 0;
+    if (e.key === "End") k = n - 1;
+    if (k !== null) { e.preventDefault(); openLevel(k, true); }
+  });
+  // La regla del hero abre el nivel correspondiente.
+  document.querySelectorAll(".a-ruler a").forEach(function (a) {
+    a.addEventListener("click", function () { openLevel(Number(a.dataset.level), false); });
+  });
+
+  /* ---------- B · ficha que se da vuelta ---------- */
+  var flip = document.getElementById("b-flip"), turn = document.getElementById("b-turn"), back = document.getElementById("b-turn-back");
+  function apply(de) {
+    flip.classList.toggle("is-de", de);
+    turn.setAttribute("aria-pressed", String(de));
+  }
+  // Se da vuelta como una ficha: se angosta, cambia de cara a mitad de camino y vuelve a abrirse.
+  function setDe(de, animate, focusEl) {
+    if (!animate || reduce) { apply(de); if (focusEl) focusEl.focus({ preventScroll: true }); return; }
+    flip.classList.remove("is-turning"); void flip.offsetWidth; flip.classList.add("is-turning");
+    setTimeout(function () { apply(de); if (focusEl) focusEl.focus({ preventScroll: true }); }, 260);
+    setTimeout(function () { flip.classList.remove("is-turning"); }, 540);
+  }
+  turn.addEventListener("click", function () { setDe(true, true, back); });
+  back.addEventListener("click", function () { setDe(false, true, turn); });
+  // Entrada: la ficha llega del lado alemán y se da vuelta al español, una vez por carga.
+  function introFlip() {
+    if (reduce) { apply(false); return; }
+    apply(true);
+    setTimeout(function () { setDe(false, true); }, 760);
+  }
+  if (initial === "b") introFlip();
+  document.querySelector('.switcher a[data-to="b"]').addEventListener("click", introFlip);
+
+  /* ---------- B · pestañas de fichero (principio de Cult UI, con semántica de tabs) ---------- */
+  var goals = [
+    { tab: "Quiero empezar", h: "Empezar desde cero, con acompañamiento.", p: "Nunca estudiaste alemán o lo dejaste hace mucho. Empezamos por tus primeras palabras y vamos a tu ritmo, en clases individuales o grupales.", next: ["Contás en la consulta que empezás desde cero.", "Conversamos qué modalidad te conviene.", "Acordamos horarios y comienzo por mensaje."], cta: "Consultar para empezar" },
+    { tab: "Quiero seguir aprendiendo", h: "Retomar, avanzar de nivel, ganar fluidez.", p: "Ya tenés una base y querés seguir. Si no sabés tu nivel exacto, no hace falta: lo conversamos antes de empezar.", next: ["Contás qué estudiaste y cuándo.", "Vemos juntos tu punto de partida.", "Acordamos cómo seguir por mensaje."], cta: "Consultar para seguir" },
+    { tab: "Quiero preparar un examen", h: "Llegar al examen con confianza.", p: "Preparación de exámenes de alemán como Goethe-Zertifikat, telc, ÖSD, TestDaF o DSH. StartEs prepara para rendir; no es centro examinador ni emite certificados.", next: ["Indicás qué examen querés rendir, o si todavía no lo sabés.", "Conversamos desde qué nivel partís.", "Organizamos la preparación por mensaje."], cta: "Consultar por un examen" },
+    { tab: "Quiero aprender español", h: "Español para germanoparlantes.", p: "Si tu idioma es el alemán y querés aprender o mejorar tu español, también tenés tu lugar en StartEs.", de: "Du möchtest Spanisch lernen? Schreib uns.", next: ["Nos escribís en alemán o en español.", "Conversamos tu objetivo.", "Acordamos el comienzo por mensaje."], cta: "Consultar por español" }
+  ];
+  var tabs = document.getElementById("b-tabs"), folder = document.getElementById("b-folder");
+  goals.forEach(function (g, i) {
+    var t = document.createElement("button");
+    t.type = "button"; t.className = "b-tab"; t.id = "b-tab-" + i; t.setAttribute("role", "tab");
+    t.setAttribute("aria-controls", "b-panel-" + i); t.setAttribute("aria-selected", i === 0 ? "true" : "false"); t.tabIndex = i === 0 ? 0 : -1;
+    t.textContent = g.tab;
+    tabs.appendChild(t);
+    var pnl = document.createElement("div");
+    pnl.className = "b-panel"; pnl.id = "b-panel-" + i; pnl.setAttribute("role", "tabpanel"); pnl.setAttribute("aria-labelledby", t.id); pnl.tabIndex = 0;
+    if (i !== 0) pnl.hidden = true;
+    pnl.innerHTML =
+      '<div><h3>' + g.h + '</h3><p>' + g.p + '</p>' + (g.de ? '<p lang="de" style="margin-top:10px;font-weight:700;color:var(--ink)">' + g.de + '</p>' : '') +
+      '<div class="b-actions"><a class="b-btn" href="#fichero-b"><span class="lbl">' + g.cta + '</span>' + arrow + '</a></div></div>' +
+      '<div class="b-next"><p class="b-next__title" id="b-next-' + i + '">Qué sigue</p><ol aria-labelledby="b-next-' + i + '">' + g.next.map(function (n) { return "<li>" + n + "</li>"; }).join("") + '</ol></div>';
+    folder.appendChild(pnl);
+  });
+  var current = 0;
+  function select(i, focus) {
+    if (i === current) { if (focus) tabs.children[i].focus(); return; }
+    var dir = i > current ? "right" : "left";
+    tabs.children[current].setAttribute("aria-selected", "false"); tabs.children[current].tabIndex = -1;
+    folder.children[current].hidden = true;
+    tabs.children[i].setAttribute("aria-selected", "true"); tabs.children[i].tabIndex = 0;
+    var p = folder.children[i];
+    p.hidden = false;
+    p.classList.remove("enter-from-right", "enter-from-left"); void p.offsetWidth;
+    if (!reduce) p.classList.add("enter-from-" + dir);
+    current = i;
+    if (focus) tabs.children[i].focus();
+  }
+  tabs.addEventListener("click", function (e) { var t = e.target.closest(".b-tab"); if (t) select(Array.prototype.indexOf.call(tabs.children, t), false); });
+  tabs.addEventListener("keydown", function (e) {
+    var n = goals.length, k = null;
+    if (e.key === "ArrowRight") k = (current + 1) % n;
+    if (e.key === "ArrowLeft") k = (current - 1 + n) % n;
+    if (e.key === "Home") k = 0;
+    if (e.key === "End") k = n - 1;
+    if (k !== null) { e.preventDefault(); select(k, true); }
+  });
+})();
+</script>
+</body>

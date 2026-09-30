@@ -8,7 +8,7 @@ Selección y consulta de fuentes: 30/09/2026. Este documento es una interpretaci
 
 https://styles.refero.design/style/031056ff-7af1-46db-8daa-115f731c5d26
 
-Interesa la separación entre superficies cálidas, la jerarquía tipográfica y el aire entre bloques. Para StartEs: fondo claro cálido, texto oscuro, introducciones breves y contraste de escalas. Reemplazar la identidad y colores de esa marca por los propios. No trasladar esferas de audio, productos, logotipos de clientes ni fuentes comerciales sin licencia. Fuente base para la dirección editorial, no plantilla para clonar.
+Interesa la separación entre superficies cálidas, la jerarquía tipográfica y el aire entre bloques. Para StartEs: fondo claro cálido, texto oscuro, introducciones breves y contraste de escalas. Reemplazar la identidad y colores de esa marca por los propios. No trasladar esferas de audio, productos, logotipos de clientes ni fuentes comerciales sin licencia. Fuente base para la dirección editorial, no plantilla para clonar. **Nota 30/09/2026:** esa dirección fue rechazada; ver `docs/07_REFERENCIAS_CONSULTADAS.md`.
 
 ### R02 — Jerarquía y uso del acento: referencia Figma en Refero
 

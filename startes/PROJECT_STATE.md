@@ -28,7 +28,7 @@ Prototipo navegable completo en Next.js (`npm run dev`). No está publicado, no 
 
 ## Propuestas iniciales aún ajustables
 
-- Dirección editorial con curvas de marca.
+- ~~Dirección editorial con curvas de marca.~~ Rechazada por el usuario el 30/09/2026 (ver sesión de revisión abajo).
 - Tokens de DESIGN.md, pareja tipográfica, textos propuestos y arquitectura técnica.
 - Variantes acotadas antes de desarrollar el sitio completo.
 
@@ -44,7 +44,7 @@ Dominio/alojamiento; proveedor de correo, almacenamiento y remitente autorizado;
 
 **Decisiones**
 - Arquitectura: Next.js 16 + TypeScript, como propone el documento 05. Páginas estáticas; solo `/api/consulta` es dinámica. Sin Tailwind, sin librerías de componentes y sin GSAP: las animaciones (título por líneas, trazado de curvas, apariciones al desplazar) se resolvieron con CSS y un IntersectionObserver.
-- Dirección visual: editorial con curvas de marca (la recomendada). Las tres direcciones están comparadas en `design/exploracion/comparacion.png`; en esa exploración las fuentes web no cargaron (sin red en el entorno) y se ven con tipografía de reserva.
+- Dirección visual: editorial con curvas de marca (la recomendada). **Rechazada después; ver la sesión de revisión.** Las tres direcciones están comparadas en `design/exploracion/comparacion.png`; en esa exploración las fuentes web no cargaron (sin red en el entorno) y se ven con tipografía de reserva.
 - Tipografías Bricolage Grotesque + Manrope, servidas localmente (`@fontsource-variable`, licencia OFL).
 - Tema oscuro: el rojo de marca se aclara a `#E0514F` solo para texto y acentos, porque `#A11312` sobre `#171716` no alcanza contraste legible. La acción principal pasa a dorado con texto oscuro. El logo se muestra sobre una placa clara.
 - Foto de Mariana (aportada por el usuario) en la sección «La academia», junto a la mención institucional. No se generó ninguna imagen de personas.
@@ -72,6 +72,26 @@ Dominio/alojamiento; proveedor de correo, almacenamiento y remitente autorizado;
 3. Decidir el registro privado de consultas (hoy no se guardan: si el correo a la academia falla, se muestra error y se conservan los datos en el navegador).
 4. Completar datos legales del titular y quitar `noindex` de las páginas legales.
 5. Confirmar con la academia el catálogo de exámenes antes de detallar fichas.
+
+## Sesión 30/09/2026 (2) — revisión de dirección artística
+
+**Pedido del usuario:** la propuesta editorial no está aprobada. Replantear composición y jerarquía; explorar dos direcciones con el mismo contenido (navegación, hero y una segunda sección), con movimiento implementado, y recomendar una antes de extender el diseño.
+
+**Hecho**
+- `CLAUDE.md`, `DESIGN.md` y `docs/05` corregidos: la dirección editorial queda rechazada, se listan los patrones a evitar y se exige la elección del usuario antes de extender el diseño.
+- Referencias consultadas y registradas en `docs/07_REFERENCIAS_CONSULTADAS.md` (URL, principio, aplicación, adaptación, licencia). Las demos en vivo no se pudieron abrir: la red del entorno bloquea esos dominios. Se leyó su texto y su código fuente.
+- Dos direcciones en `design/direcciones/index.html` (archivo de exploración, no forma parte del sitio Next.js): **A · Afiche** y **B · Cuaderno**.
+
+**Comprobado (Chromium headless, fuentes reales cargadas)**
+- Sin scroll horizontal a 360, 390, 768, 1024 y 1440 px en ambas.
+- A: la regla del hero abre el nivel correspondiente; acordeón de niveles con clic y flechas, foco correcto; menú móvil con Escape y retorno de foco.
+- B: la ficha entra en alemán y se da vuelta al español; el botón la da vuelta y mueve el foco; pestañas con clic, flechas y End, un solo panel visible.
+- Movimiento reducido: sin animaciones y la ficha queda en español.
+- Se corrigió un fallo real: tras dar vuelta la ficha, la cara oculta bloqueaba los clics (se reemplazó el giro 3D por uno 2D que muestra una sola cara).
+
+**No comprobado:** demos originales de las referencias, Safari/Firefox, dispositivos reales, lector de pantalla real, zoom al 200 %, tema oscuro (no diseñado en esta etapa).
+
+**Pendiente:** elección del usuario entre A y B. Después, llevar la dirección elegida al sitio Next.js y reemplazar los estilos actuales.
 
 ## Registro futuro
 
