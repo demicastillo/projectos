@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { nav } from "@/content/site";
-import { Close, Menu, Moon, Sun } from "./Icons";
+import { ArrowRight, Moon, Sun } from "./Icons";
 import { Logo } from "./Logo";
 
 function ThemeToggle() {
@@ -87,7 +87,7 @@ export function Header() {
       }
     };
     const onResize = () => {
-      if (window.innerWidth > 880) close(false);
+      if (window.innerWidth > 900) close(false);
     };
     document.addEventListener("keydown", onKey);
     window.addEventListener("resize", onResize);
@@ -102,9 +102,9 @@ export function Header() {
 
   return (
     <header className="site-header" data-scrolled={scrolled || open}>
-      <div className="container site-header__inner">
+      <div className="site-header__row">
         <Link href="/" className="brand" aria-label="StartEs, ir al inicio">
-          <Logo width={76} priority />
+          <Logo width={70} priority />
         </Link>
 
         <nav className="main-nav" aria-label="Principal">
@@ -121,19 +121,18 @@ export function Header() {
 
         <div className="header-actions">
           <ThemeToggle />
-          <Link href="/contacto" className="btn btn--sm" data-cta="header">
-            Consultar por clases
+          <Link href="/contacto" className="btn" data-cta="header">
+            Consultar por clases <ArrowRight />
           </Link>
           <button
             ref={toggleRef}
             type="button"
-            className="icon-btn menu-toggle"
+            className="menu-toggle"
             aria-expanded={open}
             aria-controls="mobile-nav"
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
             onClick={() => (open ? close() : setOpen(true))}
           >
-            {open ? <Close /> : <Menu />}
+            {open ? "Cerrar" : "Menú"}
           </button>
         </div>
       </div>
@@ -150,7 +149,7 @@ export function Header() {
             ))}
           </ul>
           <Link href="/contacto" className="btn" onClick={() => close(false)} data-cta="menu">
-            Consultar por clases
+            Consultar por clases <ArrowRight />
           </Link>
         </nav>
       </div>

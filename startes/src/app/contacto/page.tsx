@@ -12,14 +12,13 @@ export const metadata = pageMetadata({
 
 export default function ContactoPage() {
   return (
-    <section className="section" style={{ paddingTop: "clamp(40px, 7vw, 88px)" }} aria-labelledby="contacto-title">
+    <section className="page-hero" aria-labelledby="contacto-title">
       <div className="container contact-layout">
         <div className="contact-aside">
-          <span className="eyebrow">Contacto</span>
-          <h1 id="contacto-title">Contanos qué querés aprender.</h1>
-          <p className="lead">{formCopy.intro.replace("Contanos qué querés aprender. ", "")}</p>
-          <p>La consulta no es una inscripción: horarios, precios y comienzo se conversan después, por mensaje.</p>
-          <ul className="channels" aria-label="Otros canales">
+          <h1 id="contacto-title" className="underline2">Contanos qué querés aprender.</h1>
+          <p className="lead on-paper">{formCopy.intro.replace("Contanos qué querés aprender. ", "")}</p>
+          <p className="on-paper">La consulta no es una inscripción: horarios, precios y comienzo se conversan después, por mensaje.</p>
+          <ul className="card channels" aria-label="Otros canales">
             <li>
               <a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer" data-cta="whatsapp-contact">
                 <Chat />
@@ -46,7 +45,7 @@ export default function ContactoPage() {
             </li>
           </ul>
         </div>
-        <div className="form-card">
+        <div className="card form-card">
           <h2 className="visually-hidden">Formulario de consulta</h2>
           <ContactForm />
         </div>

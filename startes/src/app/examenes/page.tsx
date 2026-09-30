@@ -15,40 +15,37 @@ export default function ExamenesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Exámenes de alemán"
         title="Llegá al examen con confianza."
         lead="Preparación de exámenes de alemán en clases online. Contanos qué examen querés rendir, o si todavía no lo sabés, y conversamos cómo prepararlo."
       >
-        <div className="hero__actions">
+        <div className="actions">
           <Link href="/contacto?interes=examen" className="btn" data-cta="examenes-hero">
             Consultar por un examen <ArrowRight />
           </Link>
         </div>
       </PageHero>
 
-      <section className="section section--alt" aria-labelledby="como-title">
+      <section className="section" aria-label="Cómo lo trabajamos">
         <div className="container split">
-          <div className="prose reveal">
-            <span className="eyebrow">Cómo lo trabajamos</span>
-            <h2 id="como-title" style={{ marginTop: 0 }}>Tu examen, tu punto de partida.</h2>
-            <p>
+          <div className="reveal">
+            <h2>Tu examen, tu punto de partida.</h2>
+            <p className="on-paper">
               Cada examen tiene su formato y sus exigencias. En la consulta nos contás cuál querés rendir, para cuándo y
               desde qué nivel partís. Con eso conversamos cómo organizar la preparación.
             </p>
-            <p>
+            <p className="on-paper">
               Si todavía no sabés qué examen te piden, por ejemplo para estudiar o trabajar, también podemos ayudarte a
               orientarte.
             </p>
           </div>
-          <div className="prose reveal">
-            <span className="eyebrow">Exámenes habituales</span>
-            <h2 style={{ marginTop: 0 }}>Algunas familias de exámenes.</h2>
-            <ul className="tile-list">
-              <li><strong lang="de">Goethe-Zertifikat</strong></li>
-              <li><strong lang="de">telc Deutsch</strong></li>
-              <li><strong>ÖSD</strong></li>
-              <li><strong>TestDaF</strong></li>
-              <li><strong>DSH</strong></li>
+          <div className="reveal">
+            <h2>Algunas familias de exámenes.</h2>
+            <ul className="index-cards">
+              <li className="card" lang="de">Goethe-Zertifikat</li>
+              <li className="card" lang="de">telc Deutsch</li>
+              <li className="card">ÖSD</li>
+              <li className="card">TestDaF</li>
+              <li className="card">DSH</li>
             </ul>
             <p className="notice">
               StartEs prepara para rendir exámenes; no es un centro examinador ni emite certificados oficiales. Confirmá en

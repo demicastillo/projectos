@@ -47,30 +47,54 @@ export const levelOptions = ["Desde cero", "A1", "A2", "B1", "B2", "C1", "C2", "
 
 export const modalityOptions = ["Individual", "Grupal", "Quiero orientación"];
 
-export const goals = [
+// Fichero de objetivos de la portada. «Qué sigue» describe el recorrido real:
+// la consulta no es inscripción; horarios y comienzo se acuerdan por mensaje.
+export const goals: {
+  tab: string;
+  title: string;
+  text: string;
+  de?: string;
+  next: string[];
+  cta: string;
+  href: string;
+  more: { label: string; href: string };
+}[] = [
   {
-    title: "Quiero empezar",
-    text: "Nunca estudiaste alemán o lo dejaste hace mucho. Empezamos desde tus primeras palabras.",
-    href: "/aleman",
-    cta: "Ver clases de alemán",
+    tab: "Quiero empezar",
+    title: "Empezar desde cero, con acompañamiento.",
+    text: "Nunca estudiaste alemán o lo dejaste hace mucho. Empezamos por tus primeras palabras y vamos a tu ritmo, en clases individuales o grupales.",
+    next: ["Contás en la consulta que empezás desde cero.", "Conversamos qué modalidad te conviene.", "Acordamos horarios y comienzo por mensaje."],
+    cta: "Consultar para empezar",
+    href: "/contacto?interes=aleman",
+    more: { label: "Ver clases de alemán", href: "/aleman" },
   },
   {
-    title: "Quiero seguir aprendiendo",
-    text: "Ya tenés una base y querés avanzar de nivel, ganar fluidez o retomar con constancia.",
-    href: "/aleman#niveles",
-    cta: "Ver niveles",
+    tab: "Quiero seguir aprendiendo",
+    title: "Retomar, avanzar de nivel, ganar fluidez.",
+    text: "Ya tenés una base y querés seguir. Si no sabés tu nivel exacto, no hace falta: lo conversamos antes de empezar.",
+    next: ["Contás qué estudiaste y cuándo.", "Vemos juntos tu punto de partida.", "Acordamos cómo seguir por mensaje."],
+    cta: "Consultar para seguir",
+    href: "/contacto?interes=aleman",
+    more: { label: "Ver los niveles", href: "/aleman#niveles" },
   },
   {
-    title: "Quiero preparar un examen",
-    text: "Tenés un examen de alemán por delante y querés prepararlo con acompañamiento.",
-    href: "/examenes",
-    cta: "Ver preparación de exámenes",
+    tab: "Quiero preparar un examen",
+    title: "Llegar al examen con confianza.",
+    text: "Preparación de exámenes de alemán como Goethe-Zertifikat, telc, ÖSD, TestDaF o DSH. StartEs prepara para rendir; no es centro examinador ni emite certificados.",
+    next: ["Indicás qué examen querés rendir, o si todavía no lo sabés.", "Conversamos desde qué nivel partís.", "Organizamos la preparación por mensaje."],
+    cta: "Consultar por un examen",
+    href: "/contacto?interes=examen",
+    more: { label: "Ver preparación de exámenes", href: "/examenes" },
   },
   {
-    title: "Quiero aprender español",
-    text: "Hablás alemán y querés aprender o mejorar tu español. Ich möchte Spanisch lernen.",
-    href: "/espanol",
-    cta: "Ver clases de español",
+    tab: "Quiero aprender español",
+    title: "Español para germanoparlantes.",
+    text: "Si tu idioma es el alemán y querés aprender o mejorar tu español, también tenés tu lugar en StartEs.",
+    de: "Du möchtest Spanisch lernen? Schreib uns.",
+    next: ["Nos escribís en alemán o en español.", "Conversamos tu objetivo.", "Acordamos el comienzo por mensaje."],
+    cta: "Consultar por español",
+    href: "/contacto?interes=espanol",
+    more: { label: "Ver clases de español", href: "/espanol" },
   },
 ];
 

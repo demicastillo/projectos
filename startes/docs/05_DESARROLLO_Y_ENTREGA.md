@@ -23,7 +23,7 @@ Resultado: entorno identificado, decisiones técnicas justificadas y primera dir
 
 ## Fase 2 — Diseño concreto
 
-Representar dos direcciones visualmente distintas de navegación + hero + una segunda sección, con movimiento implementado, vista navegable y capturas de escritorio y móvil; no dos sitios completos. Comparar claridad, personalidad, pertinencia para edades distintas y peso visual. Recomendar una con razones concretas y esperar la elección del usuario antes de extenderla (corrección del 30/09/2026: la dirección editorial inicial fue rechazada; ver `DESIGN.md`).
+Representar dos direcciones visualmente distintas de navegación + hero + una segunda sección, con movimiento implementado, vista navegable y capturas de escritorio y móvil; no dos sitios completos. Comparar claridad, personalidad, pertinencia para edades distintas y peso visual. Recomendar una con razones concretas y esperar la elección del usuario antes de extenderla (corrección del 30/09/2026: la dirección editorial inicial fue rechazada; el usuario eligió después la dirección Cuaderno; ver `DESIGN.md`).
 
 Resultado: dirección visual visible, tokens consistentes y principales estados de botón/campo. Actualizar `DESIGN.md` con decisiones efectivamente adoptadas, distinguiéndolas de las propuestas anteriores.
 

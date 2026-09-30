@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
 
 export default function GraciasPage() {
   return (
-    <section className="section">
+    <section>
       <div className="container">
         <ThanksMessage />
       </div>

@@ -91,7 +91,28 @@ Dominio/alojamiento; proveedor de correo, almacenamiento y remitente autorizado;
 
 **No comprobado:** demos originales de las referencias, Safari/Firefox, dispositivos reales, lector de pantalla real, zoom al 200 %, tema oscuro (no diseñado en esta etapa).
 
-**Pendiente:** elección del usuario entre A y B. Después, llevar la dirección elegida al sitio Next.js y reemplazar los estilos actuales.
+**Pendiente (resuelto en la sesión 3):** elección del usuario entre A y B.
+
+## Sesión 30/09/2026 (3) — dirección Cuaderno en todo el sitio
+
+**Decisión:** el usuario eligió primero A · Afiche y enseguida cambió a **B · Cuaderno**. Antes del cambio no se había modificado el sitio; la dependencia de Archivo se quitó.
+
+**Hecho**
+- `globals.css` reescrito con el sistema Cuaderno, claro y oscuro (tokens en `DESIGN.md`).
+- Componentes nuevos: `FlashCard` (ficha del hero que se da vuelta), `GoalTabs` (fichero de objetivos con semántica de pestañas), `LevelSheet` (hoja de niveles). `CtaBand` pasa a ser el cierre con doble raya y canales; `PageHero` sin etiqueta y con título subrayado dos veces. Se eliminó `BrandCurves`.
+- Portada rehecha: ficha, fichero, niveles, modalidades, academia (foto y mención breve de Mariana), preguntas y cierre. Páginas internas, contacto, gracias, legales y 404 adaptadas. Sin etiquetas sobre los títulos.
+- Contenido del fichero en `src/content/site.ts` (`goals`), con enlaces a `/contacto?interes=…`.
+
+**Comprobado (build de producción local, Chromium headless)**
+- Todas las páginas a 1440 y 360 px; portada a 1440, 1024, 768, 390 y 360 px en claro y a 1440 y 390 px en oscuro; contacto en oscuro a 390 px. Sin scroll horizontal ni errores de consola (salvo el 404 esperado de la página inexistente).
+- Ficha: entra en alemán y queda en español; el botón la da vuelta y mueve el foco; con Enter vuelve. Con movimiento reducido no se anima y arranca en español.
+- Fichero: clic, flechas, Inicio y Fin; un solo panel visible; entrada según dirección.
+- Menú móvil y formulario: se repitió el recorrido completo de la sesión 1 (errores, preselección, 503, 500 simulado, botón bloqueado, `/gracias` simulada, API 422/503/202). Todo con respuestas simuladas: no hubo envío real de correo.
+- Se corrigió el título de preguntas, que se salía de su columna a 1440 px.
+
+**No comprobado:** Safari/Firefox, dispositivos reales, lector de pantalla real, zoom al 200 %, rendimiento, envío real con Resend. La imagen Open Graph todavía usa las curvas de la primera versión.
+
+**Próximos pasos:** rehacer la imagen Open Graph en estilo Cuaderno; luego los pasos de operación de la sesión 1 (alojamiento, Resend, datos legales).
 
 ## Registro futuro
 

@@ -5,12 +5,10 @@ import { Logo } from "./Logo";
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container">
+      <div>
         <div className="footer-grid">
           <div className="footer-brand">
-            <span className="brand">
-              <Logo width={96} />
-            </span>
+            <Logo width={84} />
             <p>Academia online de idiomas. Alemán desde cero hasta C2, exámenes y español para germanoparlantes.</p>
           </div>
           <div>

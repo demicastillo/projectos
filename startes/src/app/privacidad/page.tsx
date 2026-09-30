@@ -10,9 +10,8 @@ export const metadata = pageMetadata({
 
 export default function PrivacidadPage() {
   return (
-    <section className="section">
+    <section className="page-hero">
       <div className="container prose">
-        <span className="eyebrow">Legal</span>
         <h1>Política de privacidad</h1>
         <p className="notice">
           Borrador en preparación. Antes de publicar el sitio falta completar los datos legales del titular, la

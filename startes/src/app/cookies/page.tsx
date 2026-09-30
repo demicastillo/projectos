@@ -9,9 +9,8 @@ export const metadata = pageMetadata({
 
 export default function CookiesPage() {
   return (
-    <section className="section">
+    <section className="page-hero">
       <div className="container prose">
-        <span className="eyebrow">Legal</span>
         <h1>Cookies y almacenamiento</h1>
         <p>
           Hoy este sitio no usa cookies de analítica, publicidad ni redes sociales, y no incrusta contenido de terceros

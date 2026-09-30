@@ -15,34 +15,31 @@ export default function EspanolPage() {
   return (
     <>
       <PageHero
-        eyebrow="Clases de español"
         title="Español para germanoparlantes."
         lead="Si tu idioma es el alemán y querés aprender o mejorar tu español, en StartEs tenés clases online individuales o grupales."
       >
-        <p lang="de" style={{ fontWeight: 600 }}>
+        <p className="card bilingual" lang="de">
           Du möchtest Spanisch lernen? Schreib uns – wir melden uns bei dir.
         </p>
-        <div className="hero__actions">
+        <div className="actions">
           <Link href="/contacto?interes=espanol" className="btn" data-cta="espanol-hero">
             Consultar por clases de español <ArrowRight />
           </Link>
         </div>
       </PageHero>
 
-      <section className="section section--alt" aria-labelledby="espanol-title">
+      <section className="section" aria-label="Para quién y cómo">
         <div className="container split">
-          <div className="prose reveal">
-            <span className="eyebrow">Para quién</span>
-            <h2 id="espanol-title" style={{ marginTop: 0 }}>Desde cero o para seguir avanzando.</h2>
-            <p>
+          <div className="reveal">
+            <h2>Desde cero o para seguir avanzando.</h2>
+            <p className="on-paper">
               Para viajar, trabajar, estudiar o conectar con personas de habla hispana. Contanos tu objetivo y tu punto de
               partida en la consulta.
             </p>
           </div>
-          <div className="prose reveal">
-            <span className="eyebrow">Modalidades</span>
-            <h2 style={{ marginTop: 0 }}>Individuales o grupales.</h2>
-            <p>Horarios, duración y precios se conversan después de tu consulta, por mensaje.</p>
+          <div className="reveal">
+            <h2>Individuales o grupales.</h2>
+            <p className="on-paper">Horarios, duración y precios se conversan después de tu consulta, por mensaje.</p>
           </div>
         </div>
       </section>

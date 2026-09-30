@@ -1,17 +1,15 @@
 import type { ReactNode } from "react";
-import { BrandCurves } from "./BrandCurves";
 
-type Props = { eyebrow: string; title: ReactNode; lead?: ReactNode; children?: ReactNode; curves?: boolean };
+type Props = { title: ReactNode; lead?: ReactNode; children?: ReactNode };
 
-export function PageHero({ eyebrow, title, lead, children, curves = true }: Props) {
+// Encabezado de página interna: título subrayado dos veces, como en el cuaderno escolar alemán.
+export function PageHero({ title, lead, children }: Props) {
   return (
     <section className="page-hero">
-      {curves && <BrandCurves variant="corner" className="page-hero__curves" />}
       <div className="container">
         <div className="page-hero__inner">
-          <span className="eyebrow">{eyebrow}</span>
-          <h1>{title}</h1>
-          {lead && <p className="lead">{lead}</p>}
+          <h1 className="underline2">{title}</h1>
+          {lead && <p className="lead on-paper">{lead}</p>}
           {children}
         </div>
       </div>

@@ -23,17 +23,16 @@ export function ThanksMessage() {
   if (sent === null) return <div style={{ minHeight: "40vh" }} />;
 
   return (
-    <div className="not-found" style={{ paddingBlock: "clamp(32px, 6vw, 80px)" }}>
-      <span className="eyebrow">{sent ? "Consulta recibida" : "Consultas"}</span>
+    <div className="message">
       <h1 ref={headingRef} tabIndex={-1}>
         {sent ? "¡Gracias por escribirnos!" : "¿Querés hacer una consulta?"}
       </h1>
-      <p className="lead">
+      <p className="lead on-paper">
         {sent
           ? formCopy.success
           : "Desde el formulario de contacto podés contarnos qué querés aprender. También podés escribirnos por WhatsApp."}
       </p>
-      <div className="hero__actions">
+      <div className="actions">
         {sent ? (
           <Link href="/" className="btn">
             Volver al inicio

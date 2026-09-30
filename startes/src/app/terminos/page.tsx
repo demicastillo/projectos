@@ -9,9 +9,8 @@ export const metadata = pageMetadata({
 
 export default function TerminosPage() {
   return (
-    <section className="section">
+    <section className="page-hero">
       <div className="container prose">
-        <span className="eyebrow">Legal</span>
         <h1>Términos de uso del sitio</h1>
         <p className="notice">
           Borrador en preparación. Falta completar los datos legales del titular y la jurisdicción aplicable.
