@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>StartEs · Exploración de portada</title>
+<!-- Archivo de exploración interna (no forma parte del sitio). Abrir con ?v=1, ?v=2 o ?v=3. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}body{margin:0;font-family:Manrope,system-ui,sans-serif;color:#171717;line-height:1.6}
+  h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;margin:0;line-height:1.05;letter-spacing:-.02em}
+  .wrap{width:min(100% - 32px,1200px);margin:auto}
+  header{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+  header img{width:76px}
+  nav{display:flex;gap:28px;font-weight:600}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;font-weight:700;text-decoration:none;border:2px solid #A11312;background:#A11312;color:#fff}
+  .ghost{background:transparent;color:#171717;border-color:#d9d3c9}
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding:72px 0}
+  .hero h1{font-size:clamp(2.4rem,1.6rem + 4vw,4.6rem)}
+  .lead{font-size:1.15rem;color:#57534E;max-width:56ch;margin:20px 0 28px}
+  .actions{display:flex;flex-wrap:wrap;gap:12px}
+  .eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#57534E;display:block;margin-bottom:18px}
+  .goals{list-style:none;margin:0;padding:0}
+  .goals li{display:flex;justify-content:space-between;gap:16px;padding:22px 0;font-family:"Bricolage Grotesque";font-weight:600;font-size:1.5rem}
+  @media(max-width:800px){nav{display:none}.hero{grid-template-columns:1fr;padding:40px 0}.art{max-width:300px}}
+
+  /* 1 · Editorial con movimiento */
+  .v1{background:#FAF8F3}.v1 .btn{border-radius:12px}.v1 .ghost{border-radius:12px}
+  .v1 .accent{color:#A11312}.v1 .goals li{border-top:1px solid #d9d3c9}
+
+  /* 2 · Geometría con contraste */
+  .v2{background:#fff}.v2 .btn{border-radius:0;box-shadow:5px 5px 0 #171717;border-color:#171717}
+  .v2 .ghost{box-shadow:5px 5px 0 #EABF34;border-color:#171717;border-radius:0}
+  .v2 .hero h1{text-transform:uppercase;font-weight:800;letter-spacing:-.03em}
+  .v2 .accent{background:#EABF34;padding:0 .12em}
+  .v2 .art{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;aspect-ratio:1;border:3px solid #171717}
+  .v2 .art div{border:3px solid #171717;display:grid;place-items:center;font-family:"Bricolage Grotesque";font-weight:800;font-size:2.2rem}
+  .v2 .goals{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:3px solid #171717}
+  .v2 .goals li{border:1.5px solid #171717;padding:22px}
+  @media(max-width:800px){.v2 .goals{grid-template-columns:1fr}}
+
+  /* 3 · Capas ligeras */
+  .v3{background:radial-gradient(900px 500px at 85% 10%,#f6dfdf 0,transparent 60%),radial-gradient(800px 500px at 10% 90%,#fbf0cc 0,transparent 60%),#FAF8F3}
+  .v3 .btn{border-radius:999px}.v3 .ghost{border-radius:999px;background:rgba(255,255,255,.6);border-color:rgba(23,23,23,.15)}
+  .v3 .accent{color:#A11312}
+  .v3 .art{position:relative;aspect-ratio:1}
+  .v3 .glass{position:absolute;border-radius:24px;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.9);backdrop-filter:blur(14px);box-shadow:0 20px 50px rgba(161,19,18,.12);padding:18px 22px;font-family:"Bricolage Grotesque";font-weight:600}
+  .v3 .blob{position:absolute;border-radius:50%;filter:blur(2px)}
+  .v3 .goals{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .v3 .goals li{background:rgba(255,255,255,.6);border:1px solid rgba(23,23,23,.08);border-radius:20px;padding:22px}
+  @media(max-width:800px){.v3 .goals{grid-template-columns:1fr}}
+  .label{position:fixed;left:12px;bottom:12px;background:#171717;color:#fff;padding:6px 12px;font-size:.8rem;border-radius:6px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const v = new URLSearchParams(location.search).get("v") || "1";
+document.body.className = "v" + v;
+const names = {1:"1 · Editorial con movimiento (recomendada)",2:"2 · Geometría con contraste",3:"3 · Capas ligeras"};
+const art = {
+ 1:`<svg viewBox="0 0 500 500" class="art" aria-hidden="true"><g fill="none" stroke-linecap="round"><path d="M62 318 C 58 180, 170 72, 318 70" stroke="#171717" stroke-width="14"/><path d="M84 372 C 118 236, 262 124, 452 102" stroke="#171717" stroke-width="12"/><path d="M126 424 C 170 276, 318 158, 478 118" stroke="#A11312" stroke-width="18"/><path d="M486 128 C 342 176, 212 318, 214 404 C 216 464, 282 474, 340 440 C 396 406, 418 330, 396 268" stroke="#EABF34" stroke-width="20"/></g></svg>`,
+ 2:`<div class="art"><div style="background:#171717;color:#fff">A1</div><div style="background:#A11312;color:#fff">B2</div><div style="background:#EABF34">C1</div><div>C2</div></div>`,
+ 3:`<div class="art"><div class="blob" style="width:60%;height:60%;left:20%;top:15%;background:#A11312;opacity:.85"></div><div class="blob" style="width:45%;height:45%;left:45%;top:45%;background:#EABF34"></div><div class="glass" style="left:0;top:18%">Hallo! <small>¡Hola!</small></div><div class="glass" style="right:0;top:50%">Los geht's</div><div class="glass" style="left:10%;bottom:8%">Schritt für Schritt</div></div>`
+};
+document.getElementById("root").innerHTML = `
+<div class="wrap">
+ <header><img src="../../public/img/startes-logo-240.png" alt="StartEs"><nav><span>Clases</span><span>Exámenes</span><span>La academia</span><span>Contacto</span></nav><a class="btn" href="#">Consultar por clases</a></header>
+ <section class="hero"><div><span class="eyebrow">Academia de idiomas · Clases online</span>
+  <h1>Aprendé alemán. Hacé lugar a <span class="accent">lo que viene.</span></h1>
+  <p class="lead">Clases individuales y grupales, desde tus primeras palabras hasta niveles avanzados. También preparación de exámenes y español para germanoparlantes.</p>
+  <div class="actions"><a class="btn" href="#">Consultar por clases →</a><a class="btn ghost" href="#">Conocer las propuestas</a></div></div>
+  <div>${art[v]}</div></section>
+ <section style="padding-bottom:64px"><span class="eyebrow">Tu punto de partida</span><h2 style="font-size:2.4rem;margin-bottom:24px">¿Qué querés lograr?</h2>
+  <ul class="goals"><li>Quiero empezar <span>→</span></li><li>Quiero seguir aprendiendo <span>→</span></li><li>Quiero preparar un examen <span>→</span></li><li>Quiero aprender español <span>→</span></li></ul></section>
+</div><span class="label">${names[v]}</span>`;
+</script>
+</body>
+</html>
