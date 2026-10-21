@@ -61,3 +61,19 @@ Para ver las demos hace falta permitir esos dominios en la configuración de red
 - **URL:** código: https://raw.githubusercontent.com/magicuidesign/magicui/main/apps/www/registry/magicui/blur-fade.tsx
 - **Principio tomado:** entrada breve (400 ms, 6 px) una sola vez por elemento.
 - **Adaptación:** sin `filter: blur` (costoso y reduce legibilidad durante la transición). El contenido está visible si el script no corre.
+
+## Rediseño completo (21/10/2026)
+
+El usuario pidió rehacer el sitio porque no se veía profesional y eligió «Rediseño completo». Referencias de esta etapa:
+
+### C3 — Tapas amarillas de Reclam Universal-Bibliothek
+- **URLs:** https://en.wikipedia.org/wiki/Reclam · https://fontsinuse.com/uses/48109/reclam-universal-bibliothek-1988-2012
+- **Qué dicen:** los «librillos amarillos» de Reclam son ediciones económicas de clásicos para escuelas y universidades; tapa amarilla desde 1970 y Stempel Garamond como tipografía de la serie (rediseño de Brigitte y Hans Peter Willberg, 1988).
+- **Principio tomado:** la tapa amarilla con marco negro fino y título en serif, un objeto que cualquier estudiante de alemán reconoce. El amarillo de la marca (#EABF34) ocupa ese lugar.
+- **Dónde:** hero de la portada (la «tapa») y la sección de niveles (un estante de cuadernillos que engrosan con el nivel).
+- **Adaptación:** no se copia ninguna tapa, logotipo ni marca de Reclam. Serif Literata (OFL) en lugar de Garamond; el marco se dibuja con CSS.
+- **Licencia y dependencias:** sin código ni imágenes de terceros.
+
+### Guías aplicadas en la auditoría
+- **Web Interface Guidelines** (Vercel, MIT): https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md
+- **Frontend Design** (Anthropic): señales de diseño genérico que se evitan (eyebrows, mayúsculas en etiquetas, palabras resaltadas, tarjetas idénticas con sombra).
