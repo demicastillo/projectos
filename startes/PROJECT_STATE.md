@@ -143,3 +143,16 @@ Añadir por sesión: decisión adoptada y razón; archivos principales afectados
 **Pendiente del usuario:** fotos de clases, testimonios reales, clase de prueba sí/no, precios sí/no, duración y plataforma de las clases, consentimiento de Mariana para una sección más amplia, dominio, alojamiento (Vercel Pro o Netlify), cuenta de Resend y DNS, datos legales (titular, CUIT, domicilio).
 
 **Próximos pasos:** con esos datos, activar el envío real (Resend), publicar, dar de alta Google Business Profile y Search Console, y sumar testimonios (Embla) y Cloudflare Turnstile.
+
+## Sesión 21/10/2026 (2) — publicación en Netlify
+
+**Datos del usuario:** hay clase de prueba (se coordina por mensaje; no se dice si es gratis), las clases duran hasta unas dos horas según cada alumno, se dan por Google Meet, el correo de contacto es masgoret555@gmail.com. Los testimonios quedan vacíos hasta tener reseñas reales con permiso.
+
+**Publicado:** https://startes-academia.netlify.app, proyecto `startes-academia` en la cuenta Netlify de Demián (castillodemianluis@gmail.com), conectado a GitHub con base `startes` y publicación automática de la rama `claude/project-thread-xg5ooq`.
+- `netlify.toml` declara `@netlify/plugin-nextjs`: sin él se publicaba `.next` como archivos sueltos y todo daba 404.
+- Formulario: Netlify Forms (`public/__forms.html`, formulario «consulta», honeypot `website`), detectado en el deploy 504f885. Aviso por correo a masgoret555@gmail.com por cada consulta nueva.
+- La cuenta Netlify de Mariana (conector) tiene un proyecto `startes-idiomas` sin usar; borrarlo solo si el usuario lo confirma.
+
+**Sin verificar todavía:** un envío real del formulario de punta a punta (no se envió ninguno).
+
+**Pendiente del usuario:** dominio propio (el del quincho no se puede renombrar; comprar startes.com.ar en NIC/DonWeb y apuntarlo a Netlify, y actualizar `NEXT_PUBLIC_SITE_URL`), datos legales (titular, CUIT, domicilio), fotos y testimonios reales.
