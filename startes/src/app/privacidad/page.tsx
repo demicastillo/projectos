@@ -10,8 +10,8 @@ export const metadata = pageMetadata({
 
 export default function PrivacidadPage() {
   return (
-    <section className="page-hero">
-      <div className="container prose">
+    <section className="container-site pt-14 pb-24 sm:pt-20">
+      <div className="prose-startes">
         <h1>Política de privacidad</h1>
         <p className="notice">
           Borrador en preparación. Antes de publicar el sitio falta completar los datos legales del titular, la
@@ -47,8 +47,15 @@ export default function PrivacidadPage() {
 
         <h2>Tus derechos</h2>
         <p>
-          Podés pedir acceder, corregir o eliminar tus datos escribiendo a{" "}
-          <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+          Podés pedir acceder, corregir, actualizar o eliminar tus datos escribiendo a{" "}
+          <a href={`mailto:${contact.email}`}>{contact.email}</a>. Respondemos los pedidos de acceso dentro de los diez días
+          corridos y los de corrección o eliminación dentro de los cinco días hábiles, como indica la Ley 25.326 de
+          Protección de los Datos Personales de la República Argentina.
+        </p>
+        <p>
+          Tenés derecho a acceder a tus datos en forma gratuita a intervalos no inferiores a seis meses, salvo que acredites
+          un interés legítimo (artículo 14, inciso 3, de la Ley 25.326). La Agencia de Acceso a la Información Pública, órgano de control de la Ley 25.326, atiende las denuncias y
+          reclamos de quienes consideren afectados sus derechos.
         </p>
       </div>
     </section>

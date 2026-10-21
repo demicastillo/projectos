@@ -9,8 +9,8 @@ export const metadata = pageMetadata({
 
 export default function CookiesPage() {
   return (
-    <section className="page-hero">
-      <div className="container prose">
+    <section className="container-site pt-14 pb-24 sm:pt-20">
+      <div className="prose-startes">
         <h1>Cookies y almacenamiento</h1>
         <p>
           Hoy este sitio no usa cookies de analítica, publicidad ni redes sociales, y no incrusta contenido de terceros

@@ -2,6 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // CSS en línea: evita una petición que bloquea el primer pintado del titular.
+  experimental: { inlineCss: true },
   async headers() {
     return [
       {

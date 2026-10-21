@@ -1,7 +1,7 @@
 # StartEs · sitio web
 
 Web de StartEs, academia online de idiomas (alemán desde cero hasta C2, exámenes y español para germanoparlantes).
-Next.js (App Router) + TypeScript, estilos con variables CSS propias, sin librerías visuales ni motor de animación.
+Next.js (App Router) + TypeScript, Tailwind CSS 4 con tokens propios, componentes de shadcn/ui, Magic UI y Cult UI adaptados, y Motion como único motor de animación.
 
 ## Requisitos
 
@@ -37,9 +37,9 @@ Para probar el recorrido en local sin enviar nada: `CONTACT_MODE=demo npm run de
 
 - `assets/` originales sin modificar (logo, foto).
 - `public/img/` imágenes optimizadas generadas por `npm run assets`.
-- `design/exploracion/` las tres direcciones de portada comparadas (archivo interno, no se publica).
+- `design/` exploraciones descartadas (Afiche, Cuaderno, Reclam) y las tres direcciones de portada comparadas (archivo interno, no se publica).
 - `CLAUDE.md`, `DESIGN.md`, `docs/`, `PROJECT_STATE.md` brief del proyecto y estado actual.
 
 ## Licencias
 
-Tipografías Bricolage Grotesque y Manrope (SIL Open Font License 1.1) servidas localmente con los paquetes `@fontsource-variable`.
+Tipografía Archivo (SIL Open Font License 1.1, `public/fonts/OFL-Archivo.txt`), recortada con `scripts/subset-font.py` y servida localmente. Componentes de Magic UI, Cult UI y shadcn/ui con licencia MIT (aviso en cada archivo de `src/components/ui/`); iconos Lucide (ISC).

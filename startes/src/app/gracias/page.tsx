@@ -10,10 +10,8 @@ export const metadata = pageMetadata({
 
 export default function GraciasPage() {
   return (
-    <section>
-      <div className="container">
-        <ThanksMessage />
-      </div>
+    <section className="container-site py-20 sm:py-32">
+      <ThanksMessage />
     </section>
   );
 }

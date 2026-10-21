@@ -2,7 +2,7 @@
 
 ## Arquitectura inicial propuesta
 
-Para un proyecto nuevo: Next.js en versión estable compatible al iniciar, TypeScript, componentes React y estilos basados en variables CSS. Se puede usar Tailwind si facilita integrar la selección de componentes, sin convertir sus valores por defecto en el diseño de StartEs. GSAP sería el único motor principal si la animación lo necesita; CSS cubre las interacciones sencillas.
+Para un proyecto nuevo: Next.js en versión estable compatible al iniciar, TypeScript, componentes React y estilos basados en variables CSS. Se puede usar Tailwind si facilita integrar la selección de componentes, sin convertir sus valores por defecto en el diseño de StartEs. GSAP sería el único motor principal si la animación lo necesita; CSS cubre las interacciones sencillas. (21/10/2026: se adoptó Motion como único motor, porque lo usan los componentes de Magic UI y Cult UI elegidos; no se combina con GSAP.)
 
 Esta es una propuesta, no una dependencia ya instalada. Si el repositorio real contiene una base sólida, evaluarla antes de sustituirla. Registrar versiones elegidas y lockfile. Consultar documentación oficial actual antes de configurar: https://nextjs.org/docs ; https://www.typescriptlang.org/docs/ ; https://gsap.com/docs/v3/ .
 

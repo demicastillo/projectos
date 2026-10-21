@@ -13,7 +13,7 @@ export function pageMetadata({ title, description, path, index = true }: { title
       description,
       url: site.url ? path : undefined,
       siteName: site.name,
-      locale: "es_ES",
+      locale: "es_AR",
       type: "website",
       images: [{ url: "/img/og-startes.png", width: 1200, height: 630, alt: "StartEs, academia online de idiomas" }],
     },

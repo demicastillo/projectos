@@ -77,3 +77,51 @@ El usuario pidió rehacer el sitio porque no se veía profesional y eligió «Re
 ### Guías aplicadas en la auditoría
 - **Web Interface Guidelines** (Vercel, MIT): https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md
 - **Frontend Design** (Anthropic): señales de diseño genérico que se evitan (eyebrows, mayúsculas en etiquetas, palabras resaltadas, tarjetas idénticas con sombra).
+
+## Rediseño Escalera (21/10/2026)
+
+El usuario rechazó Reclam y pidió usar los componentes reales de las librerías que había enviado (R05 y siguientes en `docs/03`), con criterio profesional y un diseño coherente. Las páginas de demostración (magicui.design, cult-ui.com, ui.aceternity.com, ui.watermelon.sh, uiverse.io, reactbits.dev) están bloqueadas por la red de este entorno: se leyó el código fuente en GitHub y **no se vieron las demos en movimiento**. Lo que se describe es lo que hace el código.
+
+### E1 — Interactive Hover Button (Magic UI)
+- **URL:** https://raw.githubusercontent.com/magicuidesign/magicui/main/apps/www/registry/magicui/interactive-hover-button.tsx
+- **Principio tomado:** un punto que crece hasta cubrir el botón y un texto que se desplaza dejando paso a la versión con flecha.
+- **Dónde:** todos los botones principales (`src/components/ui/interactive-hover-button.tsx`).
+- **Adaptación:** punto dorado sobre rojo de marca; variante enlace (Next `Link`); el mismo efecto con foco de teclado; 48 px de alto; la copia con flecha es `aria-hidden`.
+- **Licencia:** MIT, © Magic UI.
+
+### E2 — Marquee (Magic UI)
+- **URL:** https://raw.githubusercontent.com/magicuidesign/magicui/main/apps/www/registry/magicui/marquee.tsx
+- **Principio tomado:** fila repetida que se desplaza en bucle con CSS.
+- **Dónde:** franja de exámenes de la portada (`ExamBand`).
+- **Adaptación:** copias repetidas ocultas a lectores de pantalla; con movimiento reducido queda una sola fila quieta que se ajusta en varias líneas; se pausa al pasar el mouse.
+- **Licencia:** MIT, © Magic UI.
+
+### E3 — Text Animate y Blur Fade (Magic UI)
+- **URLs:** https://raw.githubusercontent.com/magicuidesign/magicui/main/apps/www/registry/magicui/text-animate.tsx · https://raw.githubusercontent.com/magicuidesign/magicui/main/apps/www/registry/magicui/blur-fade.tsx
+- **Principio tomado:** entrada palabra por palabra con desenfoque; aparición breve al entrar en pantalla.
+- **Dónde:** Text Animate solo en el titular del cierre rojo; Blur Fade solo en los tres pasos de «Cómo se empieza» (una secuencia real). No en cada sección.
+- **Adaptación:** el texto se ve quieto hasta hidratar y con movimiento reducido; Blur Fade solo se arma si el bloque está fuera de pantalla al cargar, así nada visible desaparece; se quitó el `aria-label` duplicado; los espacios entre palabras quedan como texto normal para que ninguna línea empiece con un espacio.
+- **Licencia:** MIT, © Magic UI.
+
+### E4 — Direction Aware Tabs (Cult UI)
+- **URL:** https://raw.githubusercontent.com/nolly-studio/cult-ui/main/apps/www/registry/default/ui/direction-aware-tabs.tsx
+- **Principio tomado:** el panel entra desde el lado de la pestaña elegida y la burbuja se desliza entre pestañas.
+- **Dónde:** «¿Qué querés lograr?» de la portada (`GoalTabs`).
+- **Adaptación:** semántica `tablist`/`tab`/`tabpanel`, flechas, Inicio y Fin; colores de marca; desplazamiento lateral menor (120 px); sin movimiento con movimiento reducido; la pestaña elegida se lleva a la vista en celulares.
+- **Licencia:** MIT, © 2023 Jordan-Gilliam.
+
+### E5 — Accordion (shadcn/ui sobre Radix)
+- **URL:** https://github.com/shadcn-ui/ui (componente `accordion`, estilo new-york)
+- **Dónde:** preguntas frecuentes.
+- **Adaptación:** signo más que gira y se pinta de oro al abrir; tipografía y líneas del sitio. Las respuestas también van en los datos estructurados `FAQPage`.
+- **Licencia:** MIT (shadcn/ui y Radix UI).
+
+### Evaluados y no usados
+- **Aceternity UI** (Sticky Scroll Reveal, Timeline): licencia propia que permite sitios de clientes; su código no está en un repositorio público accesible desde aquí y la demo está bloqueada. Los pasos se resolvieron con Blur Fade.
+- **Watermelon UI**: bloques de testimonios y pie. Sin testimonios reales todavía, no se usa; el pie se hizo con la misma grilla del sitio.
+- **Number Ticker** (Magic UI): descartado; las cifras animadas son el recurso genérico que se evita y solo hay un dato real (más de ocho años de experiencia).
+- **React Bits, Uiverse, Embla**: reservados. Embla servirá para un carrusel de testimonios reales, con controles manuales.
+- **Neumorph button, fondos decorativos** (grillas, partículas, haces): descartados por decorar sin informar.
+
+### Tipografía
+- **Archivo** (Omnibus-Type, OFL): https://github.com/Omnibus-Type/Archivo. Variable en ancho: el ancho 116 replica el logotipo «START ES!» y el 70 da la voz de señalética de la franja de exámenes. Una sola familia en todo el sitio.

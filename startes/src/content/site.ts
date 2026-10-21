@@ -88,7 +88,7 @@ export const goals: {
   },
   {
     tab: "Quiero aprender español",
-    title: "Español para germanoparlantes.",
+    title: "Español para germano\u00ADparlantes.",
     text: "Si tu idioma es el alemán y querés aprender o mejorar tu español, también tenés tu lugar en StartEs.",
     de: "Du möchtest Spanisch lernen? Schreib uns.",
     next: ["Nos escribís en alemán o en español.", "Conversamos tu objetivo.", "Acordamos el comienzo por mensaje."],

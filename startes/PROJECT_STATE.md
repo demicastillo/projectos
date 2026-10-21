@@ -1,6 +1,6 @@
 # Estado del proyecto StartEs
 
-Actualizado: 30/09/2026.
+Actualizado: 21/10/2026.
 
 ## Realizado
 
@@ -117,3 +117,29 @@ Dominio/alojamiento; proveedor de correo, almacenamiento y remitente autorizado;
 ## Registro futuro
 
 Añadir por sesión: decisión adoptada y razón; archivos principales afectados; comprobaciones ejecutadas con evidencia; limitaciones; próximo paso. No acumular transcripciones ni afirmar pruebas no realizadas.
+
+## Sesión 21/10/2026 — rediseño completo «Escalera»
+
+**Pedido:** el usuario consideró que el sitio no se veía profesional, eligió «Rediseño completo», rechazó la propuesta Reclam y pidió usar los componentes reales de sus librerías con un diseño coherente; luego: «hacé todo eso vos solo».
+
+**Hecho:**
+- Migración a Tailwind CSS 4 + shadcn/ui (configuración en `components.json`) + Motion (con `LazyMotion`) + Lucide. Tokens en `globals.css` con `@theme`; tema oscuro por `data-theme`.
+- Componentes de librerías adaptados en `src/components/ui/` (ver `DESIGN.md` y `docs/07`, sección «Rediseño Escalera»).
+- Portada nueva: titular ancho, escalera de niveles interactiva que preselecciona el nivel en el formulario (`/contacto?interes=aleman&nivel=B1`), franja de exámenes, objetivos en pestañas, modalidades, pasos, academia, preguntas en acordeón y cierre rojo con canales reales.
+- Páginas internas, contacto, gracias, 404 y legales rehechas con el mismo sistema. Español con columnas en español y alemán.
+- Barra fija en celulares (consultar y WhatsApp) que aparece al bajar; no se muestra en contacto ni gracias.
+- Datos estructurados `EducationalOrganization` (layout) y `FAQPage` (portada). Locale `es_AR`.
+- Privacidad: derechos de la Ley 25.326 (plazos de 10 días corridos para acceso y 5 hábiles para rectificación o supresión) y el aviso de la AAIP. Sigue siendo borrador: faltan titular, CUIT y domicilio.
+- Tipografía Archivo recortada y precargada; CSS en línea. Imagen Open Graph nueva (`scripts/build-og.mjs`).
+- Skills de Vercel (web-design-guidelines, react-best-practices, MIT) en `.claude/skills/`.
+
+**Verificación (servidor de producción local):**
+- `tsc` y `next build` sin errores.
+- Sin desborde horizontal a 360, 390, 768, 1024 y 1440 px, claro y oscuro, en todas las páginas.
+- Flujos: menú móvil (Escape devuelve el foco), preselección por parámetros, resumen de errores con foco, correo inválido, envío sin proveedor (503, datos conservados), error 500, botón deshabilitado durante el envío, `/gracias` solo tras un envío aceptado, API con 422, 503 y honeypot 202. Los envíos «aceptados» se simularon interceptando la API: **no se envió ningún correo real**.
+- Escalera por teclado, pestañas con flechas y Fin, acordeón, movimiento reducido (desfile quieto, cierre visible).
+- Lighthouse móvil (simulado): portada 91, alemán 94, contacto 99 en rendimiento; 100 en accesibilidad, buenas prácticas y SEO. El LCP simulado de la portada es 3,1 s aunque el titular se pinta a los 0,2 s medidos: Lighthouse suma el JavaScript que se descarga antes. No se probó en un teléfono real ni con lector de pantalla real.
+
+**Pendiente del usuario:** fotos de clases, testimonios reales, clase de prueba sí/no, precios sí/no, duración y plataforma de las clases, consentimiento de Mariana para una sección más amplia, dominio, alojamiento (Vercel Pro o Netlify), cuenta de Resend y DNS, datos legales (titular, CUIT, domicilio).
+
+**Próximos pasos:** con esos datos, activar el envío real (Resend), publicar, dar de alta Google Business Profile y Search Console, y sumar testimonios (Embla) y Cloudflare Turnstile.

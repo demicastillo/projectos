@@ -1,14 +1,16 @@
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+
 type Item = { q: string; a: string };
 
 export function Faq({ items }: { items: Item[] }) {
   return (
-    <div className="card faq">
-      {items.map((item) => (
-        <details key={item.q}>
-          <summary>{item.q}</summary>
-          <p>{item.a}</p>
-        </details>
+    <Accordion type="single" collapsible className="border-t border-line">
+      {items.map((item, i) => (
+        <AccordionItem key={item.q} value={`p-${i}`}>
+          <AccordionTrigger>{item.q}</AccordionTrigger>
+          <AccordionContent>{item.a}</AccordionContent>
+        </AccordionItem>
       ))}
-    </div>
+    </Accordion>
   );
 }

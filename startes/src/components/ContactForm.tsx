@@ -6,7 +6,22 @@ import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import { contact, formCopy, interestOptions, levelOptions, modalityOptions, type Interest } from "@/content/site";
 import { LIMITS, normalize, validate, type ConsultaInput, type FieldErrors } from "@/lib/contact/validation";
 import { track } from "@/lib/analytics";
-import { Alert } from "./Icons";
+import { CircleAlert, LoaderCircle } from "lucide-react";
+import { InteractiveHoverButton } from "./ui/interactive-hover-button";
+
+const labelCls = "mb-2 block font-semibold";
+const inputCls =
+  "block min-h-12 w-full rounded-xl border border-line bg-paper px-4 py-3 text-base text-ink transition-colors placeholder:text-ink-soft hover:border-ink-soft focus-visible:border-ink focus-visible:outline-offset-1 aria-invalid:border-danger";
+const hintCls = "mt-2 block text-sm text-ink-soft";
+const optionalCls = "font-normal text-ink-soft";
+
+function FieldError({ id, children }: { id: string; children: React.ReactNode }) {
+  return (
+    <span id={id} className="mt-2 flex items-start gap-1.5 text-sm font-semibold text-danger">
+      <CircleAlert className="mt-0.5 size-4 shrink-0" aria-hidden="true" /> {children}
+    </span>
+  );
+}
 
 type Status = "idle" | "submitting" | "invalid" | "error" | "unavailable" | "demo";
 
@@ -52,10 +67,14 @@ export function ContactForm() {
   // Preselección desde otra página: ?interes=aleman|examen|espanol|orientacion (validado).
   useEffect(() => {
     requestId.current = newRequestId();
-    const value = new URLSearchParams(window.location.search).get("interes");
-    if (value && interestOptions.some((o) => o.value === value)) {
-      setData((d) => ({ ...d, interest: value as Interest }));
-    }
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("interes");
+    const level = params.get("nivel");
+    setData((d) => ({
+      ...d,
+      ...(value && interestOptions.some((o) => o.value === value) ? { interest: value as Interest } : {}),
+      ...(level && levelOptions.includes(level) ? { level } : {}),
+    }));
   }, []);
 
   const id = (name: string) => `${uid}-${name}`;
@@ -136,18 +155,18 @@ export function ContactForm() {
   const submitting = status === "submitting";
 
   return (
-    <form className="form" onSubmit={onSubmit} noValidate aria-describedby={id("intro")}>
-      <p id={id("intro")} className="visually-hidden">
+    <form className="flex flex-col gap-6" onSubmit={onSubmit} noValidate aria-describedby={id("intro")}>
+      <p id={id("intro")} className="sr-only">
         {formCopy.intro}
       </p>
 
       {status === "invalid" && errorEntries.length > 0 && (
-        <div ref={summaryRef} tabIndex={-1} className="form-status form-status--error" role="alert" aria-labelledby={id("summary-title")}>
+        <div ref={summaryRef} tabIndex={-1} className="rounded-xl border border-danger bg-danger-soft p-4" role="alert" aria-labelledby={id("summary-title")}>
           <strong id={id("summary-title")}>Revisá {errorEntries.length === 1 ? "este campo" : `estos ${errorEntries.length} campos`}:</strong>
-          <ul>
+          <ul className="mt-2 list-disc pl-5">
             {errorEntries.map(([key, msg]) => (
               <li key={key}>
-                <a href={`#${id(key)}`}>
+                <a className="underline underline-offset-2" href={`#${id(key)}`}>
                   {FIELD_LABELS[key]}: {msg}
                 </a>
               </li>
@@ -156,11 +175,12 @@ export function ContactForm() {
         </div>
       )}
 
-      <div className="form-row">
-        <div className="field">
-          <label htmlFor={id("name")}>Nombre</label>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label className={labelCls} htmlFor={id("name")}>Nombre</label>
           <input
             id={id("name")}
+            className={inputCls}
             name="name"
             type="text"
             autoComplete="name"
@@ -172,15 +192,14 @@ export function ContactForm() {
             aria-describedby={describedBy("name")}
           />
           {errors.name && (
-            <span id={id("name-error")} className="field-error">
-              <Alert /> {errors.name}
-            </span>
+            <FieldError id={id("name-error")}>{errors.name}</FieldError>
           )}
         </div>
-        <div className="field">
-          <label htmlFor={id("email")}>Correo</label>
+        <div>
+          <label className={labelCls} htmlFor={id("email")}>Correo</label>
           <input
             id={id("email")}
+            className={inputCls}
             name="email"
             type="email"
             inputMode="email"
@@ -193,18 +212,19 @@ export function ContactForm() {
             aria-describedby={describedBy("email")}
           />
           {errors.email && (
-            <span id={id("email-error")} className="field-error">
-              <Alert /> {errors.email}
-            </span>
+            <FieldError id={id("email-error")}>{errors.email}</FieldError>
           )}
         </div>
       </div>
 
-      <fieldset className="choice-group field" aria-describedby={errors.interest ? id("interest-error") : undefined}>
-        <legend>Qué te interesa</legend>
-        <div className="choices" id={id("interest")} tabIndex={-1}>
+      <fieldset aria-describedby={errors.interest ? id("interest-error") : undefined}>
+        <legend className={labelCls}>Qué te interesa</legend>
+        <div className="grid gap-2 sm:grid-cols-2" id={id("interest")} tabIndex={-1}>
           {interestOptions.map((o) => (
-            <label key={o.value} className="choice">
+            <label
+              key={o.value}
+              className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl border border-line px-4 py-3 transition-colors hover:border-ink-soft has-checked:border-ink has-checked:bg-stone has-focus-visible:outline-3 has-focus-visible:outline-offset-1 has-focus-visible:outline-focus"
+            >
               <input
                 type="radio"
                 name="interest"
@@ -212,25 +232,25 @@ export function ContactForm() {
                 checked={data.interest === o.value}
                 onChange={() => set("interest", o.value)}
                 aria-invalid={errors.interest ? true : undefined}
+                className="size-4.5 shrink-0 accent-brand focus-visible:outline-none"
               />
               <span>{o.label}</span>
             </label>
           ))}
         </div>
         {errors.interest && (
-          <span id={id("interest-error")} className="field-error">
-            <Alert /> {errors.interest}
-          </span>
+          <FieldError id={id("interest-error")}>{errors.interest}</FieldError>
         )}
       </fieldset>
 
       {data.interest === "examen" && (
-        <div className="field">
-          <label htmlFor={id("exam")}>
-            ¿Qué examen querés preparar? <span className="optional">(opcional)</span>
+        <div>
+          <label className={labelCls} htmlFor={id("exam")}>
+            ¿Qué examen querés preparar? <span className={optionalCls}>(opcional)</span>
           </label>
           <input
             id={id("exam")}
+            className={inputCls}
             name="exam"
             type="text"
             maxLength={LIMITS.exam}
@@ -239,24 +259,23 @@ export function ContactForm() {
             aria-describedby={describedBy("exam", true)}
             aria-invalid={errors.exam ? true : undefined}
           />
-          <span id={id("exam-hint")} className="hint">
+          <span id={id("exam-hint")} className={hintCls}>
             Por ejemplo Goethe-Zertifikat B1, telc B2 o «Todavía no sé».
           </span>
           {errors.exam && (
-            <span id={id("exam-error")} className="field-error">
-              <Alert /> {errors.exam}
-            </span>
+            <FieldError id={id("exam-error")}>{errors.exam}</FieldError>
           )}
         </div>
       )}
 
-      <div className="form-row">
-        <div className="field">
-          <label htmlFor={id("level")}>
-            Nivel aproximado <span className="optional">(opcional)</span>
+      <div className="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label className={labelCls} htmlFor={id("level")}>
+            Nivel aproximado <span className={optionalCls}>(opcional)</span>
           </label>
           <select
             id={id("level")}
+            className={inputCls}
             name="level"
             value={data.level}
             onChange={(e) => set("level", e.target.value)}
@@ -270,12 +289,13 @@ export function ContactForm() {
             ))}
           </select>
         </div>
-        <div className="field">
-          <label htmlFor={id("modality")}>
-            Modalidad <span className="optional">(opcional)</span>
+        <div>
+          <label className={labelCls} htmlFor={id("modality")}>
+            Modalidad <span className={optionalCls}>(opcional)</span>
           </label>
           <select
             id={id("modality")}
+            className={inputCls}
             name="modality"
             value={data.modality}
             onChange={(e) => set("modality", e.target.value)}
@@ -291,12 +311,13 @@ export function ContactForm() {
         </div>
       </div>
 
-      <div className="field">
-        <label htmlFor={id("message")}>
-          Objetivo o consulta <span className="optional">(opcional)</span>
+      <div>
+        <label className={labelCls} htmlFor={id("message")}>
+          Objetivo o consulta <span className={optionalCls}>(opcional)</span>
         </label>
         <textarea
           id={id("message")}
+          className={inputCls + " min-h-36 resize-y"}
           name="message"
           maxLength={LIMITS.message}
           value={data.message}
@@ -304,22 +325,21 @@ export function ContactForm() {
           aria-describedby={describedBy("message", true)}
           aria-invalid={errors.message ? true : undefined}
         />
-        <span id={id("message-hint")} className="hint">
+        <span id={id("message-hint")} className={hintCls}>
           Por ejemplo: para qué querés aprender, si ya estudiaste antes o qué días te resultan cómodos. {data.message.length}/{LIMITS.message}
         </span>
         {errors.message && (
-          <span id={id("message-error")} className="field-error">
-            <Alert /> {errors.message}
-          </span>
+          <FieldError id={id("message-error")}>{errors.message}</FieldError>
         )}
       </div>
 
-      <div className="field">
-        <label htmlFor={id("whatsapp")}>
-          WhatsApp <span className="optional">(opcional)</span>
+      <div>
+        <label className={labelCls} htmlFor={id("whatsapp")}>
+          WhatsApp <span className={optionalCls}>(opcional)</span>
         </label>
         <input
           id={id("whatsapp")}
+          className={inputCls}
           name="whatsapp"
           type="tel"
           inputMode="tel"
@@ -330,18 +350,16 @@ export function ContactForm() {
           aria-describedby={describedBy("whatsapp", true)}
           aria-invalid={errors.whatsapp ? true : undefined}
         />
-        <span id={id("whatsapp-hint")} className="hint">
+        <span id={id("whatsapp-hint")} className={hintCls}>
           Solo si preferís que te respondamos por WhatsApp. Incluí el código de país.
         </span>
         {errors.whatsapp && (
-          <span id={id("whatsapp-error")} className="field-error">
-            <Alert /> {errors.whatsapp}
-          </span>
+          <FieldError id={id("whatsapp-error")}>{errors.whatsapp}</FieldError>
         )}
       </div>
 
-      <label className="check">
-        <input type="checkbox" name="forMinor" checked={data.forMinor} onChange={(e) => set("forMinor", e.target.checked)} />
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-stone p-4 text-[0.95rem]">
+        <input type="checkbox" name="forMinor" checked={data.forMinor} onChange={(e) => set("forMinor", e.target.checked)} className="mt-1 size-4.5 shrink-0 accent-brand" />
         <span>
           Escribo como persona adulta responsable por una persona menor de edad. No hace falta que envíes sus datos
           personales: los conversamos después.
@@ -349,55 +367,55 @@ export function ContactForm() {
       </label>
 
       {/* Campo trampa para bots; oculto para personas y lectores de pantalla. */}
-      <div className="hp" aria-hidden="true">
-        <label htmlFor={id("website")}>No completar este campo</label>
+      <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+        <label className={labelCls} htmlFor={id("website")}>No completar este campo</label>
         <input id={id("website")} name="website" type="text" tabIndex={-1} autoComplete="off" />
       </div>
 
-      <p className="form-privacy">
+      <p className="text-sm text-ink-soft">
         Usamos tus datos solo para responder esta consulta. Más información en la{" "}
-        <Link href="/privacidad">política de privacidad</Link>. Enviar la consulta no te inscribe ni te suscribe a
+        <Link className="underline underline-offset-2" href="/privacidad">política de privacidad</Link>. Enviar la consulta no te inscribe ni te suscribe a
         comunicaciones comerciales.
       </p>
 
       <div ref={statusRef} tabIndex={-1} aria-live="polite">
         {status === "error" && (
-          <div className="form-status form-status--error" role="alert">
+          <div className="rounded-xl border border-danger bg-danger-soft p-4" role="alert">
             <p>{formCopy.error}</p>
-            <a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp_click", { location: "form-error" })}>
+            <a className="font-semibold underline underline-offset-2" href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp_click", { location: "form-error" })}>
               Escribir por WhatsApp
             </a>
           </div>
         )}
         {status === "unavailable" && (
-          <div className="form-status form-status--error" role="alert">
+          <div className="rounded-xl border border-danger bg-danger-soft p-4" role="alert">
             <p>{formCopy.unavailable}</p>
             <p>
-              <a href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp_click", { location: "form-unavailable" })}>
+              <a className="font-semibold underline underline-offset-2" href={contact.whatsappUrl} target="_blank" rel="noopener noreferrer" onClick={() => track("whatsapp_click", { location: "form-unavailable" })}>
                 WhatsApp {contact.whatsappDisplay}
               </a>{" "}
-              · <a href={`mailto:${contact.email}`}>{contact.email}</a>
+              o <a className="font-semibold underline underline-offset-2" href={`mailto:${contact.email}`}>{contact.email}</a>
             </p>
           </div>
         )}
         {status === "demo" && (
-          <div className="form-status form-status--demo" role="status">
+          <div className="rounded-xl border border-gold bg-gold-soft p-4" role="status">
             <p>{formCopy.demo}</p>
           </div>
         )}
-        {submitting && <span className="visually-hidden">Enviando consulta…</span>}
+        {submitting && <span className="sr-only">Enviando consulta…</span>}
       </div>
 
       <div>
-        <button type="submit" className="btn" disabled={submitting} aria-disabled={submitting}>
+        <InteractiveHoverButton type="submit" disabled={submitting} aria-disabled={submitting} className="w-full sm:w-auto">
           {submitting ? (
-            <>
-              <span className="spinner" aria-hidden="true" /> Enviando…
-            </>
+            <span className="inline-flex items-center gap-2">
+              <LoaderCircle className="size-4.5 animate-spin" aria-hidden="true" /> Enviando…
+            </span>
           ) : (
             "Enviar consulta"
           )}
-        </button>
+        </InteractiveHoverButton>
       </div>
     </form>
   );

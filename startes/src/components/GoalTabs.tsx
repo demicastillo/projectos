@@ -1,103 +1,51 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState, type KeyboardEvent } from "react";
 import { goals } from "@/content/site";
-import { ArrowRight } from "./Icons";
+import { DirectionAwareTabs } from "./ui/direction-aware-tabs";
+import { InteractiveHoverLink } from "./ui/interactive-hover-button";
 
-// Pestañas de fichero. El contenido entra desde el lado de la pestaña elegida
-// (principio de Direction Aware Tabs, Cult UI, MIT; reescrito con semántica de tabs; ver docs/07, I2).
+const short = ["Empezar", "Seguir aprendiendo", "Preparar un examen", "Aprender español"];
+
 export function GoalTabs() {
-  const [current, setCurrent] = useState(0);
-  const [dir, setDir] = useState<"left" | "right" | null>(null);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-
-  const select = (i: number, focus: boolean) => {
-    if (i !== current) {
-      setDir(i > current ? "right" : "left");
-      setCurrent(i);
-    }
-    if (focus) tabs.current[i]?.focus();
-  };
-
-  const onKey = (e: KeyboardEvent) => {
-    const n = goals.length;
-    const map: Record<string, number> = {
-      ArrowRight: (current + 1) % n,
-      ArrowLeft: (current - 1 + n) % n,
-      Home: 0,
-      End: n - 1,
-    };
-    if (e.key in map) {
-      e.preventDefault();
-      select(map[e.key], true);
-    }
-  };
-
-  return (
-    <div>
-      <div className="tabs" role="tablist" aria-label="Objetivos" onKeyDown={onKey}>
-        {goals.map((g, i) => (
-          <button
-            key={g.tab}
-            ref={(el) => {
-              tabs.current[i] = el;
-            }}
-            type="button"
-            role="tab"
-            id={`tab-${i}`}
-            className="tab"
-            aria-selected={i === current}
-            aria-controls={`panel-${i}`}
-            tabIndex={i === current ? 0 : -1}
-            onClick={() => select(i, false)}
-          >
-            {g.tab}
-          </button>
-        ))}
-      </div>
-      <div className="card folder">
-        {goals.map((g, i) => (
-          <div
-            key={g.tab}
-            // Al pasar de oculto a visible, la animación de entrada se repite.
-            className={`panel${i === current && dir ? ` enter-from-${dir}` : ""}`}
-            id={`panel-${i}`}
-            role="tabpanel"
-            aria-labelledby={`tab-${i}`}
-            tabIndex={0}
-            hidden={i !== current}
-          >
-            <div>
-              <h3>{g.title}</h3>
-              <p>{g.text}</p>
-              {g.de && (
-                <p className="de-line" lang="de">
-                  {g.de}
-                </p>
-              )}
-              <div className="actions">
-                <Link href={g.href} className="btn" data-cta={`goal-${i}`}>
-                  {g.cta} <ArrowRight />
-                </Link>
-                <Link href={g.more.href} className="text-link">
-                  {g.more.label}
-                </Link>
-              </div>
-            </div>
-            <div className="next">
-              <p className="next__title" id={`next-${i}`}>
-                Qué sigue
-              </p>
-              <ol aria-labelledby={`next-${i}`}>
-                {g.next.map((n) => (
-                  <li key={n}>{n}</li>
-                ))}
-              </ol>
-            </div>
+  const tabs = goals.map((g, i) => ({
+    id: i,
+    label: short[i] ?? g.tab,
+    content: (
+      <div className="grid gap-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16">
+        <div>
+          <h3 className="font-wide text-[clamp(1.75rem,3.2vw,2.6rem)] font-extrabold tracking-tight">{g.title}</h3>
+          <p className="mt-5 max-w-[56ch] text-lg text-ink-soft">{g.text}</p>
+          {g.de && (
+            <p lang="de" className="mt-6 inline-block rounded-xl bg-gold-soft px-4 py-3 font-medium">
+              {g.de}
+            </p>
+          )}
+        </div>
+        <div className="flex flex-col gap-6">
+          <div>
+            <h4 className="text-sm font-semibold text-ink-soft">Qué sigue</h4>
+            <ol className="mt-3 flex flex-col">
+              {g.next.map((step, n) => (
+                <li key={step} className="flex gap-4 border-t border-line py-3.5 first:border-t-0 first:pt-1">
+                  <span className="font-wide w-5 shrink-0 font-extrabold text-brand-text tabular-nums">{n + 1}</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
           </div>
-        ))}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <InteractiveHoverLink href={g.href} data-cta={`objetivo-${i}`}>
+              {g.cta}
+            </InteractiveHoverLink>
+            <Link href={g.more.href} className="font-semibold underline decoration-line decoration-2 underline-offset-6 hover:decoration-brand">
+              {g.more.label}
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    ),
+  }));
+
+  return <DirectionAwareTabs tabs={tabs} label="Objetivos" />;
 }
