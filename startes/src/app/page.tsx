@@ -6,6 +6,7 @@ import { Faq } from "@/components/Faq";
 import { GoalTabs } from "@/components/GoalTabs";
 import { LevelPicker } from "@/components/LevelPicker";
 import { Steps } from "@/components/Steps";
+import { Testimonials } from "@/components/Testimonials";
 import { contact, faqs } from "@/content/site";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -73,7 +74,7 @@ export default function Home() {
                 Individuales o grupales.
               </h2>
               <p className="mt-5 max-w-[40ch] text-lg text-ink-soft">
-                Todas las clases son online. Si no sabés cuál te conviene, lo vemos juntos en la consulta.
+                Todas las clases son online, por Google Meet, y pueden durar hasta unas dos horas. Si no sabés cuál te conviene, lo vemos juntos en la consulta.
               </p>
             </div>
             <div className="grid gap-10 sm:grid-cols-2 sm:gap-0 sm:divide-x sm:divide-line">
@@ -141,6 +142,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Testimonials />
 
       <section id="preguntas" aria-labelledby="faq-title" className="container-site pb-20 sm:pb-28">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">

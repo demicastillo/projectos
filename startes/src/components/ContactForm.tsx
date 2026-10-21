@@ -49,6 +49,29 @@ const FIELD_LABELS: Record<keyof ConsultaInput, string> = {
   forMinor: "Consulta para una persona menor",
 };
 
+// Con Netlify Forms (NEXT_PUBLIC_CONTACT_PROVIDER=netlify) la consulta se guarda en
+// Netlify y llega por correo según el aviso configurado en el panel. Los campos deben
+// coincidir con public/__forms.html.
+const NETLIFY_FORMS = process.env.NEXT_PUBLIC_CONTACT_PROVIDER === "netlify";
+
+function netlifyBody(input: ConsultaInput, honeypot: string) {
+  const interest = interestOptions.find((o) => o.value === input.interest)?.label ?? input.interest;
+  return new URLSearchParams({
+    "form-name": "consulta",
+    subject: `Consulta web de ${input.name}: ${interest}`,
+    nombre: input.name,
+    email: input.email,
+    interes: interest,
+    nivel: input.level,
+    modalidad: input.modality,
+    examen: input.exam,
+    whatsapp: input.whatsapp,
+    menor_de_edad: input.forMinor ? "Sí, escribe una persona adulta responsable" : "No",
+    mensaje: input.message,
+    website: honeypot,
+  }).toString();
+}
+
 function newRequestId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : String(Date.now() + Math.random());
 }
@@ -111,13 +134,23 @@ export function ContactForm() {
     const timer = setTimeout(() => controller.abort(), 15_000);
 
     try {
-      const res = await fetch("/api/consulta", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...input, website: honeypot, requestId: requestId.current }),
-        signal: controller.signal,
-      });
-      const body = (await res.json().catch(() => ({}))) as { status?: string; errors?: FieldErrors };
+      const res = NETLIFY_FORMS
+        ? await fetch("/__forms.html", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: netlifyBody(input, honeypot),
+            signal: controller.signal,
+          })
+        : await fetch("/api/consulta", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...input, website: honeypot, requestId: requestId.current }),
+            signal: controller.signal,
+          });
+      // Netlify Forms responde 200 con HTML; la API propia responde JSON.
+      const body = NETLIFY_FORMS
+        ? { status: res.ok ? "sent" : undefined }
+        : ((await res.json().catch(() => ({}))) as { status?: string; errors?: FieldErrors });
 
       if (res.ok && body.status === "sent") {
         track("contact_submit_success", { interest: input.interest });

@@ -7,7 +7,7 @@ const steps = [
   },
   {
     title: "Conversamos",
-    text: "Te respondemos para entender tu objetivo y recomendarte la modalidad que mejor te va.",
+    text: "Te respondemos para entender tu objetivo, recomendarte una modalidad y, si querés, coordinar una clase de prueba.",
   },
   {
     title: "Acordamos el comienzo",

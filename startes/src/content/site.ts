@@ -101,7 +101,15 @@ export const goals: {
 export const faqs = [
   {
     q: "¿Las clases son online?",
-    a: "Sí. Todas las clases de StartEs son online, así que podés tomarlas desde donde estés.",
+    a: "Sí. Todas las clases de StartEs son online, por Google Meet, así que podés tomarlas desde donde estés.",
+  },
+  {
+    q: "¿Hay clase de prueba?",
+    a: "Sí. Pedila en la consulta y la coordinamos por mensaje, para que conozcas cómo son las clases antes de decidir.",
+  },
+  {
+    q: "¿Cuánto dura cada clase?",
+    a: "Hasta unas dos horas. La duración y el contenido se adaptan a lo que necesites y se acuerdan con cada alumno.",
   },
   {
     q: "¿Puedo empezar sin saber nada de alemán?",
@@ -139,3 +147,8 @@ export const formCopy = {
     "El envío de consultas desde la web todavía no está activo. Conservamos lo que escribiste. Mientras tanto, podés escribirnos por WhatsApp o correo.",
   demo: "Modo demostración: la consulta pasó la validación, pero no se guardó ni se envió a nadie.",
 };
+
+// Opiniones de alumnos. Solo opiniones reales, con permiso de cada persona para
+// publicarlas (texto exacto, nombre o iniciales y, si se quiere, el nivel o examen).
+// Mientras la lista esté vacía, la sección no se muestra.
+export const testimonials: { quote: string; name: string; detail?: string }[] = [];
