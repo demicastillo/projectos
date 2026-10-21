@@ -7,3 +7,7 @@
   NEXT_PUBLIC_CONTACT_PROVIDER = "netlify"
   # Cambiar por el dominio propio cuando se conecte.
   NEXT_PUBLIC_SITE_URL = "https://startes-academia.netlify.app"
+
+# Runtime de Next.js en Netlify (sin esto se publica .next como archivos sueltos y todo da 404).
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
