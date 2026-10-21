@@ -136,12 +136,12 @@ img { display: block; max-width: 100%; height: auto; }
 .is-switching [data-face] { animation: swap 360ms var(--ease-out) both; }
 @keyframes swap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-/* Entrada: se traza el marco y sube el título, una vez por carga. */
-.js .cover__frame > i:nth-of-type(1), .js .cover__frame > i:nth-of-type(3) { animation: drawX 700ms var(--ease-out) both; }
-.js .cover__frame > i:nth-of-type(2), .js .cover__frame > i:nth-of-type(4) { animation: drawY 700ms 120ms var(--ease-out) both; }
-.js .cover__title { animation: rise 760ms 160ms var(--ease-out) both; }
-.js .cover__lead, .js .cover__actions, .js .cover__note { animation: fade 520ms 420ms var(--ease) both; }
-.js .cover__facts { animation: fade 520ms 560ms var(--ease) both; }
+/* Entrada: se traza el marco y sube el título, una vez por carga (clase intro). */
+.intro .cover__frame > i:nth-of-type(1), .intro .cover__frame > i:nth-of-type(3) { animation: drawX 700ms var(--ease-out) both; }
+.intro .cover__frame > i:nth-of-type(2), .intro .cover__frame > i:nth-of-type(4) { animation: drawY 700ms 120ms var(--ease-out) both; }
+.intro .cover__title { animation: rise 760ms 160ms var(--ease-out) both; }
+.intro .cover__lead, .intro .cover__actions, .intro .cover__note { animation: fade 520ms 420ms var(--ease) both; }
+.intro .cover__facts { animation: fade 520ms 560ms var(--ease) both; }
 @keyframes drawX { from { transform: scaleX(0); } to { transform: none; } }
 @keyframes drawY { from { transform: scaleY(0); } to { transform: none; } }
 @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
@@ -212,7 +212,7 @@ img { display: block; max-width: 100%; height: auto; }
 }
 </style>
 
-<script>document.documentElement.classList.add("js");</script>
+<script>document.documentElement.classList.add("js","intro");</script>
 
 <header class="nav">
   <div class="wrap nav__row">
@@ -320,6 +320,8 @@ img { display: block; max-width: 100%; height: auto; }
 <script>
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // La entrada se ve una sola vez: al cambiar de idioma no se repite.
+  setTimeout(function () { document.documentElement.classList.remove("intro"); }, 1400);
 
   /* Menú móvil */
   var mb = document.querySelector(".nav__menu"), menu = document.getElementById("menu");
