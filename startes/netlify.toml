@@ -5,3 +5,5 @@
 [build.environment]
   NODE_VERSION = "22"
   NEXT_PUBLIC_CONTACT_PROVIDER = "netlify"
+  # Cambiar por el dominio propio cuando se conecte.
+  NEXT_PUBLIC_SITE_URL = "https://startes-academia.netlify.app"
